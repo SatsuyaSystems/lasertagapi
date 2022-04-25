@@ -1,0 +1,263 @@
+<%- include('./includes/dash.ejs') %>
+<link rel="stylesheet" href="/assets/css/dashboard.css">
+<link rel="stylesheet" href="/assets/css/rangeslider.css">
+<link rel="stylesheet" href="/assets/css/cbuilder.css">
+<section class="home">
+    <div class="text">Class Builder</div>
+    <div class="dash_container">
+        <form action="/api/createclass" method="POST">
+            <label style="color: white; font-size: larger;">Name</label>
+            <div class="info">
+                <div class="field">
+                    <input type="text" id="name" placeholder="CLASS NAME HERE" name="classname">
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Shield</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input" type="range" min="0" max="100" value="0" steps="1" name="shield">
+                    <div id="maxi" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Health</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input2" type="range" min="0" max="100" value="0" steps="1" name="health">
+                    <div id="maxi2" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Luck</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input3" type="range" min="0" max="100" value="0" steps="1" name="luck">
+                    <div id="maxi3" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Armor</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input4" type="range" min="0" max="100" value="0" steps="1" name="armor">
+                    <div id="maxi4" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Knockoff Time</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input5" type="range" min="0" max="100" value="0" steps="1" name="knockofftime">
+                    <div id="maxi5" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Regeneration Rate</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input6" type="range" min="0" max="100" value="0" steps="1" name="regrate">
+                    <div id="maxi6" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="button-30" value="Save Class">
+        </form>
+        <button class="button-30" onclick="loadClass()">Load Class</button>
+        <button class="button-30" onclick="del()">Delete Class</button>
+        <button class="button-30" onclick="clearAll()">Clear All</button>
+    </div>
+</section>
+
+<script>
+    const maxpoints = 350
+    var lastinteract = ""
+    const name = document.getElementById("name");
+    const s1 = document.getElementById("input");
+    const m1 = document.getElementById('maxi')
+    const s2 = document.getElementById("input2");
+    const m2 = document.getElementById('maxi2')
+    const s3 = document.getElementById("input3");
+    const m3 = document.getElementById('maxi3')
+    const s4 = document.getElementById("input4");
+    const m4 = document.getElementById('maxi4')
+    const s5 = document.getElementById("input5");
+    const m5 = document.getElementById('maxi5')
+    const s6 = document.getElementById("input6");
+    const m6 = document.getElementById('maxi6')
+    s1.oninput = (()=>{
+        lastinteract = "s1"
+      let value = s1.value;
+      m1.innerText = value
+      calc()
+    });
+    s2.oninput = (()=>{
+        lastinteract = "s2"
+      let value = s2.value;
+      m2.innerText = value
+      calc()
+    });
+    s3.oninput = (()=>{
+        lastinteract = "s3"
+      let value = s3.value;
+      m3.innerText = value
+      calc()
+    });
+    s4.oninput = (()=>{
+        lastinteract = "s4"
+      let value = s4.value;
+      m4.innerText = value
+      calc()
+    });
+    s5.oninput = (()=>{
+        lastinteract = "s5"
+      let value = s5.value;
+      m5.innerText = value
+      calc()
+    });
+    s6.oninput = (()=>{
+        lastinteract = "s6"
+      let value = s6.value;
+      m6.innerText = value
+      calc()
+    });
+
+    function calc() {
+        const sum = parseInt(s1.value) + parseInt(s2.value) + parseInt(s3.value) + parseInt(s4.value) + parseInt(s5.value) + parseInt(s6.value)
+        if (sum > maxpoints) {
+            if (lastinteract == "s1")
+            {
+                var need = maxpoints - parseInt(s2.value) - parseInt(s3.value) - parseInt(s4.value) - parseInt(s5.value) - parseInt(s6.value)
+                s1.value = need
+                m1.innerText = need
+            }
+            if (lastinteract == "s2")
+            {
+                var need = maxpoints - parseInt(s1.value) - parseInt(s3.value) - parseInt(s4.value) - parseInt(s5.value) - parseInt(s6.value)
+                s2.value = need
+                m2.innerText = need
+            }
+            if (lastinteract == "s3")
+            {
+                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s4.value) - parseInt(s5.value) - parseInt(s6.value)
+                s3.value = need
+                m3.innerText = need
+            }
+            if (lastinteract == "s4")
+            {
+                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s3.value) - parseInt(s5.value) - parseInt(s6.value)
+                s4.value = need
+                m4.innerText = need
+            }
+            if (lastinteract == "s5")
+            {
+                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s3.value) - parseInt(s4.value) - parseInt(s6.value)
+                s5.value = need
+                m5.innerText = need
+            }
+
+            if (lastinteract == "s6")
+            {
+                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s3.value) - parseInt(s4.value) - parseInt(s5.value)
+                s6.value = need
+                m6.innerText = need
+            }
+        }
+    }
+
+    async function loadClass() {
+        let cname = window.prompt("Enter class name","")
+        if (cname == null) return console.log("abort")
+        const response = await fetch("/api/classperks", {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify({"classname": cname, "username": "<%= User.username %>"}) // body data type must match "Content-Type" header
+            });
+            response.json().then(data => {
+                if (data['data']) return alert(data['data'])
+                name.value = data['classname']
+                s1.value = data['shield']
+                m1.innerText = data['shield']
+                s2.value = data['health']
+                m2.innerText = data['health']
+                s3.value = data['luck']
+                m3.innerText = data['luck']
+                s4.value = data['armor']
+                m4.innerText = data['armor']
+                s5.value = data['knockofftime']
+                m5.innerText = data['knockofftime']
+                s6.value = data['regrate']
+                m6.innerText = data['regrate']
+            });
+    }
+
+    async function del() {
+        let isExecuted = confirm("Are you sure to execute this action?")
+        if(isExecuted) {
+            const response = await fetch("/api/deleteclass", {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify({"classname": name.value, "username": "<%= User.username %>"}) // body data type must match "Content-Type" header
+            });
+            response.json().then(data => {
+                console.log(data['data'])
+                clearAll()
+            });
+        }
+    }
+
+    async function clearAll() {
+        name.value = null
+        s1.value = 0
+        m1.innerText = "?"
+        s2.value = 0
+        m2.innerText = "?"
+        s3.value = 0
+        m3.innerText = "?"
+        s4.value = 0
+        m4.innerText = "?"
+        s5.value = 0
+        m5.innerText = "?"
+        s6.value = 0
+        m6.innerText = "?"
+    }
+  </script>

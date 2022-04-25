@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="/assets/css/include.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="/assets/img/3098870.png">
+
+</head>
+<body onload="">
+    <nav class="sidebar open">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="/assets/img/3098870.png" alt="">
+                </span>
+
+                <div class="text logo-text">
+                    <span class="name">Lasertag</span>
+                    <span class="profession"><%= User.username %></span>
+                </div>
+            </div>
+
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+
+                <li class="search-box">
+                    <i class='bx bx-search icon'></i>
+                    <input type="text" placeholder="Search..." id="search" onkeyup="myFunction()">
+                </li>
+
+                <ul class="menu-links" id="menu-links">
+
+                    <li class="nav-link">
+                        <a href="/dashboard">
+                            <i class='bx bx-home icon' ></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+
+                <% if (User.admin == true) { %>
+                    <li class="nav-link">
+                        <a href="/game">
+                            <i class='bx bx-joystick icon' ></i>
+                            <span class="text nav-text">Game Settings</span>
+                        </a>
+                    </li>
+                <% } %>
+
+                    <li class="nav-link">
+                        <a href="/cbuilder">
+                            <i class='bx bxs-user-plus icon'></i>
+                            <span class="text nav-text">Class Builder</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="/wbuilder">
+                            <i class='bx bx-cross icon'></i>
+                            <span class="text nav-text">Weapon Builder</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="/player">
+                            <i class='bx bxs-user-detail icon'></i>
+                            <span class="text nav-text">Player Settings</span>
+                        </a>
+                    </li>
+
+                <% if (User.terminal == true) { %>
+                    <li class="nav-link">
+                        <a href="/terminal">
+                            <i class='bx bx-terminal icon'></i>
+                            <span class="text nav-text">Terminal</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="/devices">
+                            <i class='bx bx-microchip icon'></i>
+                            <span class="text nav-text">Devices</span>
+                        </a>
+                    </li>
+                <% } %>
+
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+
+                <li class="">
+                    <a href="https://paypal.me/niklasriemekasten" target="blank">
+                    <i class='bx bx-donate-heart icon'></i>
+                        <span class="text nav-text">Donate</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="/users/logout">
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>        
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function myFunction() {
+          // Declare variables
+          var input, filter, ul, li, a, i;
+          input = document.getElementById("search");
+          filter = input.value.toUpperCase();
+          ul = document.getElementById("menu-links");
+          li = ul.getElementsByTagName("li");
+        
+          // Loop through all list items, and hide those who don't match the search query
+          for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+            } else {
+              li[i].style.display = "none";
+            }
+          }
+        }
+        </script>
+
+    <script>
+        const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+function forceDarkmode() {
+    body.classList.toggle("dark");
+    if(body.classList.contains("dark")){
+        modeText.innerText = "Light mode";
+    }else{
+        modeText.innerText = "Dark mode";
+        
+    }
+}
+
+toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close");
+})
+
+searchBtn.addEventListener("click" , () =>{
+    sidebar.classList.remove("close");
+})
+
+    </script>
+
+</body>
+</html>

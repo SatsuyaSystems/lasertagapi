@@ -1,0 +1,202 @@
+<%- include('./includes/dash.ejs') %>
+<link rel="stylesheet" href="/assets/css/dashboard.css">
+<link rel="stylesheet" href="/assets/css/rangeslider.css">
+<link rel="stylesheet" href="/assets/css/cbuilder.css">
+<section class="home">
+    <div class="text">Weapon Builder</div>
+    <div class="dash_container">
+        <form action="/api/createweapon" method="POST">
+            <label style="color: white; font-size: larger;">Name</label>
+            <div class="info">
+                <div class="field">
+                    <input type="text" id="name" placeholder="WEAPON NAME HERE" name="weaponname">
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Damage</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input" type="range" min="0" max="100" value="0" steps="1" name="damage">
+                    <div id="maxi" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Fire Speed</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input2" type="range" min="0" max="100" value="0" steps="1" name="reload">
+                    <div id="maxi2" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Magazine</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input3" type="range" min="0" max="100" value="0" steps="1" name="magazine">
+                    <div id="maxi3" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <label style="color: white; font-size: larger;">Magazine Reload</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input4" type="range" min="0" max="100" value="0" steps="1" name="magreload">
+                    <div id="maxi4" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="button-30" value="Save Weapon">
+        </form>
+        <button class="button-30" onclick="loadWeapon()">Load Weapon</button>
+        <button class="button-30" onclick="del()">Delete Weapon</button>
+        <button class="button-30" onclick="clearAll()">Clear All</button>
+    </div>
+</section>
+
+<script>
+    const maxpoints = 250
+    var lastinteract = ""
+    const name = document.getElementById("name");
+    const s1 = document.getElementById("input");
+    const m1 = document.getElementById('maxi')
+    const s2 = document.getElementById("input2");
+    const m2 = document.getElementById('maxi2')
+    const s3 = document.getElementById("input3");
+    const m3 = document.getElementById('maxi3')
+    const s4 = document.getElementById("input4");
+    const m4 = document.getElementById('maxi4')
+    s1.oninput = (()=>{
+        lastinteract = "s1"
+      let value = s1.value;
+      m1.innerText = value
+      calc()
+    });
+    s2.oninput = (()=>{
+        lastinteract = "s2"
+      let value = s2.value;
+      m2.innerText = value
+      calc()
+    });
+    s3.oninput = (()=>{
+        lastinteract = "s3"
+      let value = s3.value;
+      m3.innerText = value
+      calc()
+    });
+    s4.oninput = (()=>{
+        lastinteract = "s4"
+      let value = s4.value;
+      m4.innerText = value
+      calc()
+    });
+
+    function calc() {
+        const sum = parseInt(s1.value) + parseInt(s2.value) + parseInt(s3.value) + parseInt(s4.value)
+        if (sum > maxpoints) {
+            if (lastinteract == "s1")
+            {
+                var need = maxpoints - parseInt(s2.value) - parseInt(s3.value) - parseInt(s4.value)
+                s1.value = need
+                m1.innerText = need
+            }
+            if (lastinteract == "s2")
+            {
+                var need = maxpoints - parseInt(s1.value) - parseInt(s3.value) - parseInt(s4.value)
+                s2.value = need
+                m2.innerText = need
+            }
+            if (lastinteract == "s3")
+            {
+                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s4.value)
+                s3.value = need
+                m3.innerText = need
+            }
+            if (lastinteract == "s4")
+            {
+                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s3.value)
+                s4.value = need
+                m4.innerText = need
+            }
+        }
+    }
+
+    async function loadWeapon() {
+        let cname = window.prompt("Enter weapon name","")
+        if (cname == null) return console.log("abort")
+        const response = await fetch("/api/weaponperks", {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify({"weaponname": cname, "username": "<%= User.username %>"}) // body data type must match "Content-Type" header
+        });
+        response.json().then(data => {
+            if (data['data']) return alert(data['data'])
+                name.value = data['weaponname']
+                s1.value = data['damage']
+                m1.innerText = data['damage']
+                s2.value = data['reload']
+                m2.innerText = data['reload']
+                s3.value = data['magazine']
+                m3.innerText = data['magazine']
+                s4.value = data['magreload']
+                m4.innerText = data['magreload']
+        });
+    }
+
+    async function del() {
+        let isExecuted = confirm("Are you sure to execute this action?")
+        if(isExecuted) {
+            const response = await fetch("/api/deleteweapon", {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify({"weaponname": name.value, "username": "<%= User.username %>"}) // body data type must match "Content-Type" header
+            });
+            response.json().then(data => {
+                console.log(data['data'])
+                clearAll()
+            });
+        }
+    }
+
+    async function clearAll() {
+        name.value = null
+        s1.value = 0
+        m1.innerText = "?"
+        s2.value = 0
+        m2.innerText = "?"
+        s3.value = 0
+        m3.innerText = "?"
+        s4.value = 0
+        m4.innerText = "?"
+    }
+  </script>
