@@ -1,0 +1,46 @@
+<%- include('./includes/dash.ejs') %>
+<section class="home">
+    <div class="text">Terminal</div>
+    <div class="dash_container">
+        <link rel="stylesheet" href="/assets/css/terminal.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <div class="scroll-container">
+            <div class="list">
+                <% Users.forEach(function(data) {%>
+                    <div class="position" id="<%- data['_id'] %>">
+                        Username:
+                        <a style="color: red;">
+                        <%- data['username'] %>
+                        </a>|
+                        Class:
+                        <a style="color: red;">
+                            <%- data['class'] %>
+                        </a>|
+                        Weapon:
+                        <a style="color: red;">
+                            <%- data['weapon'] %>
+                        </a>|
+                        Ready:
+                        <a style="color: red;">
+                            <%- data['ready'] %>
+                        </a>|
+                        Action:
+                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/resetuser/<%- data['_id'] %>">
+                            Reset
+                        </a>or
+                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/deleteuser/<%- data['_id'] %>">
+                            Delete
+                        </a>
+                    </div>
+                <%})%>
+            </div>
+        </div>
+
+        <form class="member-control-form" method="POST" action="/api/createuser">
+            <input type="text" name="username" class="form-control" id="username" placeholder="Username" autocomplete="off"><br>
+            <input type="text" name="password" class="form-control" id="password" placeholder="Password" autocomplete="off"><br>
+            <button type="submit" class="btn btn-primary">Add User</button>
+        </form>
+
+    </div>
+</section>

@@ -17,7 +17,7 @@ const Weapon = require('../models/Weapon')
       password: req.body.password
     })
     regUser.save()
-    res.send("done!")
+    res.redirect("/terminal")
   })
 
   router.post('/creategame', urlencodedParser, (req, res) => {
