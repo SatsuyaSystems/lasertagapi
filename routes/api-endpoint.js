@@ -61,6 +61,14 @@ const Weapon = require('../models/Weapon')
     res.json({data: "yeet"})
   })
 
+  router.post('/changeclass', urlencodedParser, async(req, res) => {
+    await User.findOneAndUpdate(
+      { username: req.body.username },
+      { class: req.body.class }
+    )
+    res.redirect("/player")
+  })
+
   router.post('/createweapon', urlencodedParser, async(req, res) => {
     if (await Weapon.findOne({weaponname: req.body.weaponname })) {
       await Weapon.findOneAndDelete({ weaponname: req.body.weaponname, user: req.user.username})
@@ -80,6 +88,14 @@ const Weapon = require('../models/Weapon')
   router.post('/deleteweapon', urlencodedParser, async(req, res) => {
     await Weapon.findOneAndDelete({ weaponname: req.body.weaponname, user: req.body.username })
     res.json({data: "yeet"})
+  })
+
+  router.post('/changeweapon', urlencodedParser, async(req, res) => {
+    await User.findOneAndUpdate(
+      { username: req.body.username },
+      { weapon: req.body.weapon }
+    )
+    res.redirect("/player")
   })
   
   router.post('/fetchuser', urlencodedParser, async(req, res) => {

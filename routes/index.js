@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../config/auth')
 const Users = require('../models/User');
+const Classes = require('../models/Class')
+const Weapons = require('../models/Weapon')
 
 router.get('/', ensureAuthenticated, async(req, res) => {
     res.redirect('/dashboard')
@@ -37,8 +39,14 @@ router.get('/wbuilder', ensureAuthenticated, async(req, res) => {
 
 router.get('/player', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
-    res.render('index', {
-        User: req.user
+    Classes.find({user: req.user.username}, function(err, classes) {
+        Weapons.find({user: req.user.username}, function(err, weapons) {
+            res.render('playersettings', {
+                User: req.user,
+                Weapons: weapons,
+                Classes: classes
+            })
+        })
     })
 })
 

@@ -1,0 +1,38 @@
+<%- include('./includes/dash.ejs') %>
+<link rel="stylesheet" href="/assets/css/playersettings.css">
+<section class="home">
+    <div class="text">Player Settings</div>
+    <div class="dash_container">
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Selected Class </div>
+            <div class="interactionCardContent">
+                <form action="/api/changeclass" method="POST">
+                    <input type="hidden" value="<%- User['username'] %>" name="username">
+                    <select name="class" id="class_select" class="box">
+                        <option value="none" selected disabled hidden><%- User['class'] %></option>
+                        <% Classes.forEach(function(data) {%>
+                            <option value="<%- data['classname'] %>"><%- data['classname'] %></option>
+                        <%})%>
+                    </select>
+                    <button type="submit" class="btn">Save Class</button>
+                </form>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Selected Weapon </div>
+            <div class="interactionCardContent">
+                <form action="/api/changeweapon" method="POST">
+                    <input type="hidden" value="<%- User['username'] %>" name="username">
+                    <select name="weapon" id="weapon_select" class="box">
+                        <option value="none" selected disabled hidden><%- User['weapon'] %></option>
+                        <% Weapons.forEach(function(data) {%>
+                            <option value="<%- data['weaponname'] %>"><%- data['weaponname'] %></option>
+                        <%})%>
+                    </select>
+                    <button type="submit" class="btn">Save Weapon</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</section>

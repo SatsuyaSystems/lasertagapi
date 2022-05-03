@@ -1,9 +1,8 @@
 <%- include('./includes/dash.ejs') %>
+<link rel="stylesheet" href="/assets/css/terminal.css">
 <section class="home">
     <div class="text">Terminal</div>
     <div class="dash_container">
-        <link rel="stylesheet" href="/assets/css/terminal.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <div class="scroll-container">
             <div class="list">
                 <% Users.forEach(function(data) {%>
@@ -35,12 +34,10 @@
                 <%})%>
             </div>
         </div>
-
         <form class="member-control-form" method="POST" action="/api/createuser">
-            <input type="text" name="username" class="form-control" id="username" placeholder="Username" autocomplete="off"><br>
-            <input type="text" name="password" class="form-control" id="password" placeholder="Password" autocomplete="off"><br>
-            <button type="submit" class="btn btn-primary">Add User</button>
+            <input type="text" name="username" class="form-control" id="username" placeholder="Username" autocomplete="off" required><br>
+            <input type="text" name="password" class="form-control" id="password" placeholder="Password" autocomplete="off" required><br>
+            <button type="submit" class="btn">Add User</button>
         </form>
-
     </div>
 </section>
