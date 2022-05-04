@@ -24,14 +24,32 @@
       }
     </style>
 
+<style>
+  @keyframes mymove {
+    from { 
+        transform: rotate(0deg); 
+    } to { 
+        transform: rotate(360deg); 
+    }
+    
+  }
+  @keyframes hide {
+    from { 
+        opacity: 100%; 
+    } to { 
+        opacity: 0%; 
+    }
+  }
+</style>
+
     
     <!-- Custom styles for this template -->
     <link href="/assets/css/signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
     
-<main class="form-signin">
-  <form action="/users/login" method="POST">
+<main class="form-signin" id="form-signin" style="display: block">
+  <form action="/users/login" method="POST" id="tosubmit">
     <img class="mb-4" src="/assets/img/3098870.png" alt="" width="100" height="100">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -47,12 +65,31 @@
     <div class="mb-3">
         Let me play some Lasertag!
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; EXPLOIT-SYSTEMS 2022</p>
   </form>
+  <button class="w-100 btn btn-lg btn-primary" onclick="submit()">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; EXPLOIT-SYSTEMS 2022</p>
 </main>
-
-
+<div style="margin-left: auto; margin-right: auto; display: none; animation: mymove 3s infinite; opacity: 70%;" id="icon">
+  <img src="/assets/img/2243208.png" width="50%" height="50%">
+</div>
+</body>
+<script>
+  async function submit() {
+    var form = document.getElementById('form-signin')
+    var tosubmit = document.getElementById('tosubmit')
+    var icon = document.getElementById('icon')
+    form.style.animation = "hide 1s infinite"
     
-  </body>
+    setTimeout(function(){ // hide form
+      form.style.display = "none"
+      setTimeout(function(){ // show icon
+        icon.style.display = "block"
+        setTimeout(function(){ // submit form
+          tosubmit.submit()
+        }, 2800)
+      }, 500)
+    }, 1000)
+    
+  }
+</script>
 </html>
