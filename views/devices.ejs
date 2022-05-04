@@ -1,0 +1,26 @@
+<%- include('./includes/dash.ejs') %>
+<link rel="stylesheet" href="/assets/css/dashboard.css">
+<link rel="stylesheet" href="/assets/css/devices.css">
+<section class="home">
+    <div class="text">Devices</div>
+    <div class="dash_container">
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Vest Version </div>
+            <div class="interactionCardContent">
+                <form action="/api/vestvc" method="POST">
+                    <input type="text" placeholder="<%- Vest['version'] %>" class="box" name="version" autocomplete="off" required>
+                    <button type="submit" class="btn">Save Version</button>
+                </form>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Weapon  Version</div>
+            <div class="interactionCardContent">
+                <form action="/api/weaopnvc" method="POST">
+                    <input type="text" placeholder="<%- Weapon['version'] %>" class="box" name="version" autocomplete="off" required>
+                    <button type="submit" class="btn">Save Version</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

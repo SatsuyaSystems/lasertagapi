@@ -6,6 +6,7 @@ const User = require('../models/User')
 const Game = require('../models/Game')
 const Class = require('../models/Class')
 const Weapon = require('../models/Weapon')
+const Version = require('../models/Versions')
 
   router.get('/', (req, res) => {
     res.render('403')
@@ -154,5 +155,22 @@ const Weapon = require('../models/Weapon')
         })
     })
   })
+
+
+router.post('/weaponvc', urlencodedParser, async(req, res) => {
+  await Version.findOneAndUpdate(
+    { program: "weapon" },
+    { version: req.body.version }
+  )
+  res.redirect("/devices")
+})
+
+router.post('/vestvc', urlencodedParser, async(req, res) => {
+  await Version.findOneAndUpdate(
+    { program: "vest" },
+    { version: req.body.version }
+  )
+  res.redirect("/devices")
+})
 
 module.exports = router;

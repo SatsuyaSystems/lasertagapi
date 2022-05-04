@@ -39,5 +39,46 @@
             <input type="text" name="password" class="form-control" id="password" placeholder="Password" autocomplete="off" required><br>
             <button type="submit" class="btn">Add User</button>
         </form>
+
+        <div class="scroll-container">
+            <div class="list">
+                <% Classes.forEach(function(data) {%>
+                    <div class="position" id="<%- data['_id'] %>">
+                        User:
+                        <a style="color: red;">
+                        <%- data['user'] %>
+                        </a>|
+                        Class:
+                        <a style="color: red;">
+                            <%- data['classname'] %>
+                        </a>|
+                        Action:
+                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/deleteclass/<%- data['_id'] %>">
+                            Delete
+                        </a>
+                    </div>
+                <%})%>
+            </div>
+        </div>
+        <div class="scroll-container" style="margin-top: 5%; margin-bottom: 10%;">
+            <div class="list">
+                <% Weapons.forEach(function(data) {%>
+                    <div class="position" id="<%- data['_id'] %>">
+                        User:
+                        <a style="color: red;">
+                        <%- data['user'] %>
+                        </a>|
+                        Weapon:
+                        <a style="color: red;">
+                            <%- data['weaponname'] %>
+                        </a>|
+                        Action:
+                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/deleteweapon/<%- data['_id'] %>">
+                            Delete
+                        </a>
+                    </div>
+                <%})%>
+            </div>
+        </div>
     </div>
 </section>

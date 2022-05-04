@@ -1,0 +1,58 @@
+.interactionCard {
+    margin-bottom: 3%;
+    color: black;
+    height: 200px;
+    background-color: #505050;
+    margin-left: 3%;
+    width: 45%;
+    border-radius: 15px;
+    float: left;
+    box-shadow: 0 0 1em 0 #505050;
+}
+
+.interactionCardTitle {
+    margin-top: 5px;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.interactionCardContent{
+    color: white;
+    margin-top: 3%;
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+.box {
+    width: 120px;
+    height: 35px;
+    border: 1px solid #999;
+    font-size: 18px;
+    color: #1c87c9;
+    background-color: #eee;
+    border-radius: 5px;
+    min-width:100%;
+    text-align: center;
+    }
+    .btn {
+    color: #fff;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-top: 25px;
+    width: 100%;
+}

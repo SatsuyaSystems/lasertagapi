@@ -4,6 +4,7 @@ const { ensureAuthenticated } = require('../config/auth')
 const Users = require('../models/User');
 const Classes = require('../models/Class')
 const Weapons = require('../models/Weapon')
+const Versions = require('../models/Versions')
 
 router.get('/', ensureAuthenticated, async(req, res) => {
     res.redirect('/dashboard')
@@ -53,9 +54,15 @@ router.get('/player', ensureAuthenticated, async(req, res) => {
 router.get('/terminal', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
     Users.find({}, function(err, users) {
-        res.render('terminal', {
-            User: req.user,
-            Users: users
+        Classes.find({}, function(err, classes) {
+            Weapons.find({}, function(err, weapons) {
+                res.render('terminal', {
+                    User: req.user,
+                    Weapons: weapons,
+                    Classes: classes,
+                    Users: users
+                })
+            })
         })
     })
 })
@@ -73,10 +80,27 @@ router.get('/terminal/resetuser/:id', ensureAuthenticated, async(req, res) => {
     res.redirect("/terminal#" + req.params.id)
 })
 
+router.get('/terminal/deleteclass/:id', ensureAuthenticated, async(req, res) => {
+    await Classes.findOneAndDelete({_id: req.params.id})
+    res.redirect("/terminal")
+})
+
+router.get('/terminal/deleteweapon/:id', ensureAuthenticated, async(req, res) => {
+    await Weapons.findOneAndDelete({_id: req.params.id})
+    res.redirect("/terminal")
+})
+
+
 router.get('/devices', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
-    res.render('index', {
-        User: req.user
+    Versions.findOne({program: "weapon"}, function(err, weapon) {
+        Versions.findOne({program: "vest"}, function(err, vest) {
+            res.render('devices', {
+                User: req.user,
+                Weapon: weapon,
+                Vest: vest
+            })
+        })
     })
 })
 
