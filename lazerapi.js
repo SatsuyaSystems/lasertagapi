@@ -50,6 +50,9 @@ app.get('*', async(req, res) => {
 app.post('*', async(req, res) => {
     res.render('404')
 })
+app.get('/403', async(req, res) => {
+    res.render('403')
+})
 
 //TEMPLATING ENGINE
 app.set('views', './views')
