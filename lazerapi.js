@@ -10,10 +10,12 @@ const passport = require('passport');
 require('./config/passport')(passport);
 require('dotenv/config');
 var useragent = require('./useragent');
+var fileupload = require('express-fileupload')
 const app = express();
 
 app.use(bodyParser.json());
 app.use(useragent.express());
+app.use(fileupload())
 
 //ASSETS
 app.use('/assets', express.static(__dirname + '/assets'))

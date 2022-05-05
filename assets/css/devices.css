@@ -56,3 +56,24 @@
     margin-top: 25px;
     width: 100%;
 }
+
+.scroll-container{
+    border: 2px solid grey;
+    height: 200px;
+    overflow-y: scroll;
+    margin-left: 3%;
+    margin-right: 4%;
+    color: white;
+}
+
+.list {
+    position: relative;
+    margin-left: 10px;
+    margin-top: 0.1%;
+    text-align: center;
+}
+
+.position {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}

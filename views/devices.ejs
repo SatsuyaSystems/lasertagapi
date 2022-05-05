@@ -22,5 +22,55 @@
                 </form>
             </div>
         </div>
+
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Vest Script </div>
+            <div class="interactionCardContent">
+                <form action="/api/uploadvest" method="POST" enctype="multipart/form-data">
+                    <input type="file" placeholder="File" class="box" name="file" required>
+                    <button type="submit" class="btn">Save Script</button>
+                </form>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Weapon Script </div>
+            <div class="interactionCardContent">
+                <form action="/api/uploadweapon" method="POST" enctype="multipart/form-data">
+                    <input type="file" placeholder="File" class="box" name="file" required>
+                    <button type="submit" class="btn">Save Script</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="scroll-container" style="margin-top: 500px; margin-bottom: 10%;">
+            <div class="list">
+                <div class="position">
+                    <a style="color: lawngreen;">
+                    All files from /download/vest/
+                    </a>
+                </div>
+                <% VestFiles.forEach(function(data) {%>
+                    <div class="position" id="<%- data %>">
+                        File:
+                        <a style="color: red;" href="/downloads/vest/<%- data %>">
+                        <%- data %>
+                        </a>
+                    </div>
+                <%})%>
+                <div class="position">
+                    <a style="color: lawngreen;">
+                    All files from /download/weapon/
+                    </a>
+                </div>
+                <% WeaponFiles.forEach(function(data) {%>
+                    <div class="position" id="<%- data %>">
+                        File:
+                        <a style="color: red;" href="/downloads/weapon/<%- data %>">
+                        <%- data %>
+                        </a>
+                    </div>
+                <%})%>
+            </div>
+        </div>
     </div>
 </section>

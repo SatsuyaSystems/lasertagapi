@@ -173,4 +173,22 @@ router.post('/vestvc', urlencodedParser, async(req, res) => {
   res.redirect("/devices")
 })
 
+router.post('/uploadvest', urlencodedParser, async(req, res) => {
+  if (req.files) {
+    var file = req.files.file
+    var filename = file.name
+    file.mv('./downloads/vest/' + filename)
+  }
+  res.redirect("/devices")
+})
+
+router.post('/uploadweapon', urlencodedParser, async(req, res) => {
+  if (req.files) {
+    var file = req.files.file
+    var filename = file.name
+    file.mv('./downloads/weapon/' + filename)
+  }
+  res.redirect("/devices")
+})
+
 module.exports = router;

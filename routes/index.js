@@ -5,6 +5,7 @@ const Users = require('../models/User');
 const Classes = require('../models/Class')
 const Weapons = require('../models/Weapon')
 const Versions = require('../models/Versions')
+const fs = require("fs")
 
 router.get('/', ensureAuthenticated, async(req, res) => {
     res.redirect('/dashboard')
@@ -95,10 +96,14 @@ router.get('/devices', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
     Versions.findOne({program: "weapon"}, function(err, weapon) {
         Versions.findOne({program: "vest"}, function(err, vest) {
+            var vfiles = fs.readdirSync('./downloads/vest/')
+            var wfiles = fs.readdirSync('./downloads/weapon/')
             res.render('devices', {
                 User: req.user,
                 Weapon: weapon,
-                Vest: vest
+                Vest: vest,
+                VestFiles: vfiles,
+                WeaponFiles: wfiles
             })
         })
     })
