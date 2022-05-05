@@ -116,4 +116,18 @@ router.get('/devices', ensureAuthenticated, async(req, res) => {
     })
 })
 
+router.get('/devices/delvest/:file', ensureAuthenticated, async(req, res) => {
+    if (req.user.terminal == false) return res.redirect("/403")
+    var filePath = './downloads/vest/' + req.params.file; 
+    fs.unlinkSync(filePath)
+    res.redirect("/devices")
+})
+
+router.get('/devices/delweapon/:file', ensureAuthenticated, async(req, res) => {
+    if (req.user.terminal == false) return res.redirect("/403")
+    var filePath = './downloads/weapon/' + req.params.file; 
+    fs.unlinkSync(filePath);
+    res.redirect("/devices")
+})
+
 module.exports = router;

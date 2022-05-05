@@ -42,31 +42,39 @@
             </div>
         </div>
 
-        <div class="scroll-container" style="margin-top: 500px; margin-bottom: 10%;">
+        <div class="scroll-container" style="margin-top: 500px;">
             <div class="list">
                 <div class="position">
                     <a style="color: lawngreen;">
-                    All files from /download/vest/
+                    All files from /downloads/vest/
                     </a>
                 </div>
                 <% VestFiles.forEach(function(data) {%>
                     <div class="position" id="<%- data %>">
                         File:
-                        <a style="color: red;" href="/downloads/vest/<%- data %>">
+                        <a style="color: red; text-decoration: none;" href="/downloads/vest/<%- data %>">
                         <%- data %>
+                        </a>|
+                        Action:
+                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/devices/delvest/<%- data %>">
+                        Delete
                         </a>
                     </div>
                 <%})%>
                 <div class="position">
                     <a style="color: lawngreen;">
-                    All files from /download/weapon/
+                    All files from /downloads/weapon/
                     </a>
                 </div>
                 <% WeaponFiles.forEach(function(data) {%>
                     <div class="position" id="<%- data %>">
                         File:
-                        <a style="color: red;" href="/downloads/weapon/<%- data %>">
+                        <a style="color: red; text-decoration: none;" href="/downloads/weapon/<%- data %>">
                         <%- data %>
+                        </a>|
+                        Action:
+                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/devices/delweapon/<%- data %>">
+                        Delete
                         </a>
                     </div>
                 <%})%>
