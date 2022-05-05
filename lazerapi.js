@@ -44,15 +44,16 @@ app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/loginapi'));
 app.use('/version', require("./routes/versions"));
 app.use('/api', require("./routes/api-endpoint"));
+app.get('/403', async(req, res) => {
+    res.render('403')
+})
 app.get('*', async(req, res) => {
     res.render('404')
 })
 app.post('*', async(req, res) => {
     res.render('404')
 })
-app.get('/403', async(req, res) => {
-    res.render('403')
-})
+
 
 //TEMPLATING ENGINE
 app.set('views', './views')
