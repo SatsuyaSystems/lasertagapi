@@ -13,8 +13,10 @@ router.get('/', ensureAuthenticated, async(req, res) => {
 
 router.get('/dashboard', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
+    logs = fs.readFileSync("./assets/logs/gamefeed.txt", "utf-8").split('\n')
     res.render('index', {
-        User: req.user
+        User: req.user,
+        Logs: logs
     })
 })
 
@@ -42,8 +44,8 @@ router.get('/wbuilder', ensureAuthenticated, async(req, res) => {
 
 router.get('/player', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
-    Classes.find({user: req.user.username}, function(err, classes) {
-        Weapons.find({user: req.user.username}, function(err, weapons) {
+    Classes.find({user: req.user._id}, function(err, classes) {
+        Weapons.find({user: req.user._id}, function(err, weapons) {
             res.render('playersettings', {
                 User: req.user,
                 Weapons: weapons,
@@ -59,11 +61,13 @@ router.get('/terminal', ensureAuthenticated, async(req, res) => {
     Users.find({}, function(err, users) {
         Classes.find({}, function(err, classes) {
             Weapons.find({}, function(err, weapons) {
+                logs = fs.readFileSync("./assets/logs/terminal.txt", "utf-8").split('\n')
                 res.render('terminal', {
                     User: req.user,
                     Weapons: weapons,
                     Classes: classes,
-                    Users: users
+                    Users: users,
+                    Logs: logs
                 })
             })
         })
@@ -73,6 +77,8 @@ router.get('/terminal', ensureAuthenticated, async(req, res) => {
 router.get('/terminal/deleteuser/:id', ensureAuthenticated, async(req, res) => {
     if (req.user.terminal == false) return res.redirect("/403")
     await Users.findOneAndDelete({_id: req.params.id})
+    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Deleted User: " + req.params.id + "\n")
     res.redirect("/terminal")
 })
 
@@ -82,18 +88,24 @@ router.get('/terminal/resetuser/:id', ensureAuthenticated, async(req, res) => {
         { _id: req.params.id },
         { class: "none", weapon: "none" }
     )
+    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Reset User: " + req.params.id + "\n")
     res.redirect("/terminal#" + req.params.id)
 })
 
 router.get('/terminal/deleteclass/:id', ensureAuthenticated, async(req, res) => {
     if (req.user.terminal == false) return res.redirect("/403")
     await Classes.findOneAndDelete({_id: req.params.id})
+    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Deleted Class: " + req.params.id + "\n")
     res.redirect("/terminal")
 })
 
 router.get('/terminal/deleteweapon/:id', ensureAuthenticated, async(req, res) => {
     if (req.user.terminal == false) return res.redirect("/403")
     await Weapons.findOneAndDelete({_id: req.params.id})
+    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Deleted Weapon: " + req.params.id + "\n")
     res.redirect("/terminal")
 })
 
@@ -120,6 +132,8 @@ router.get('/devices/delvest/:file', ensureAuthenticated, async(req, res) => {
     if (req.user.terminal == false) return res.redirect("/403")
     var filePath = './downloads/vest/' + req.params.file; 
     fs.unlinkSync(filePath)
+    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Deleted File in Vests: " + req.params.file + "\n")
     res.redirect("/devices")
 })
 
@@ -127,7 +141,27 @@ router.get('/devices/delweapon/:file', ensureAuthenticated, async(req, res) => {
     if (req.user.terminal == false) return res.redirect("/403")
     var filePath = './downloads/weapon/' + req.params.file; 
     fs.unlinkSync(filePath);
+    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Deleted File in Weapons: " + req.params.file + "\n")
     res.redirect("/devices")
+})
+
+router.get('/devices/weaponview/:file', ensureAuthenticated, async(req, res) => {
+    if (req.user.terminal == false) return res.redirect("/403")
+    var filePath = './downloads/weapon/' + req.params.file; 
+    var text = fs.readFileSync(filePath, "utf-8").split('\n')
+    res.render('viewer', {
+        Text: text
+    })
+})
+
+router.get('/devices/vestview/:file', ensureAuthenticated, async(req, res) => {
+    if (req.user.terminal == false) return res.redirect("/403")
+    var filePath = './downloads/vest/' + req.params.file; 
+    var text = fs.readFileSync(filePath, "utf-8").split('\n')
+    res.render('viewer', {
+        Text: text
+    })
 })
 
 module.exports = router;

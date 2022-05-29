@@ -43,6 +43,7 @@ app.get('/filter', function(req, res){
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/loginapi'));
 app.use('/version', require("./routes/versions"));
+app.use('/gapi', require("./routes/gameapi"));
 app.use('/api', require("./routes/api-endpoint"));
 app.get('/403', async(req, res) => {
     res.render('403')

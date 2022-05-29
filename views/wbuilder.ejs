@@ -60,6 +60,18 @@
                     </div>
                 </div>
             </div>
+            <label style="color: white; font-size: larger;">Crit Rate</label>
+            <div class="range">
+                <div class="field">
+                    <div class="value left">
+                        0
+                    </div>
+                    <input id="input5" type="range" min="0" max="100" value="0" steps="1" name="critrate">
+                    <div id="maxi5" class="value right">
+                        ?
+                    </div>
+                </div>
+            </div>
             <input type="submit" class="button-30" value="Save Weapon">
         </form>
         <button class="button-30" onclick="loadWeapon()">Load Weapon</button>
@@ -69,7 +81,7 @@
 </section>
 
 <script>
-    const maxpoints = 250
+    const maxpoints = 300
     var lastinteract = ""
     const name = document.getElementById("name");
     const s1 = document.getElementById("input");
@@ -80,6 +92,8 @@
     const m3 = document.getElementById('maxi3')
     const s4 = document.getElementById("input4");
     const m4 = document.getElementById('maxi4')
+    const s5 = document.getElementById("input5");
+    const m5 = document.getElementById('maxi5')
     s1.oninput = (()=>{
         lastinteract = "s1"
       let value = s1.value;
@@ -104,33 +118,46 @@
       m4.innerText = value
       calc()
     });
+    s5.oninput = (()=>{
+        lastinteract = "s5"
+      let value = s5.value;
+      m5.innerText = value
+      calc()
+    });
 
     function calc() {
-        const sum = parseInt(s1.value) + parseInt(s2.value) + parseInt(s3.value) + parseInt(s4.value)
+        const sum = parseInt(s1.value) + parseInt(s2.value) + parseInt(s3.value) + parseInt(s4.value) + parseInt(s5.value)
         if (sum > maxpoints) {
             if (lastinteract == "s1")
             {
-                var need = maxpoints - parseInt(s2.value) - parseInt(s3.value) - parseInt(s4.value)
+                var need = maxpoints - parseInt(s2.value) - parseInt(s3.value) - parseInt(s4.value) - parseInt(s5.value)
                 s1.value = need
                 m1.innerText = need
             }
             if (lastinteract == "s2")
             {
-                var need = maxpoints - parseInt(s1.value) - parseInt(s3.value) - parseInt(s4.value)
+                var need = maxpoints - parseInt(s1.value) - parseInt(s3.value) - parseInt(s4.value) - parseInt(s5.value)
                 s2.value = need
                 m2.innerText = need
             }
             if (lastinteract == "s3")
             {
-                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s4.value)
+                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s4.value) - parseInt(s5.value)
                 s3.value = need
                 m3.innerText = need
             }
             if (lastinteract == "s4")
             {
-                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s3.value)
+                var need = maxpoints - parseInt(s2.value) - parseInt(s1.value) - parseInt(s3.value) - parseInt(s5.value)
                 s4.value = need
                 m4.innerText = need
+            }
+
+            if (lastinteract == "s5")
+            {
+                var need = maxpoints - parseInt(s1.value) - parseInt(s2.value) - parseInt(s3.value) - parseInt(s4.value)
+                s5.value = need
+                m5.innerText = need
             }
         }
     }
@@ -149,7 +176,7 @@
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify({"weaponname": cname, "username": "<%= User.username %>"}) // body data type must match "Content-Type" header
+            body: JSON.stringify({"weaponname": cname, "userid": "<%= User._id %>"}) // body data type must match "Content-Type" header
         });
         response.json().then(data => {
             if (data['data']) return alert(data['data'])
@@ -162,6 +189,8 @@
                 m3.innerText = data['magazine']
                 s4.value = data['magreload']
                 m4.innerText = data['magreload']
+                s5.value = data['critrate']
+                m5.innerText = data['critrate']
         });
     }
 
@@ -179,7 +208,7 @@
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify({"weaponname": name.value, "username": "<%= User.username %>"}) // body data type must match "Content-Type" header
+            body: JSON.stringify({"weaponname": name.value, "userid": "<%= User._id %>"}) // body data type must match "Content-Type" header
             });
             response.json().then(data => {
                 console.log(data['data'])

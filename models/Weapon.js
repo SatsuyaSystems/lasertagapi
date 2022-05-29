@@ -21,6 +21,10 @@ const wschema = mongoose.Schema({
         type: Number,
         required: true
     },
+    critrate: {
+        type: Number,
+        required: true
+    },
     user: {
         type: String,
         required: true

@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const games = new mongoose.Schema({
     name: {
         type: String,
-        default: "root"
+        required: true
+    },
+    group: {
+        type: String,
+        required: true
     },
     time: {
         type: Number,

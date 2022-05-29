@@ -74,10 +74,10 @@
 </div>
 </body>
 <script>
+  var form = document.getElementById('form-signin')
+  var tosubmit = document.getElementById('tosubmit')
+  var icon = document.getElementById('icon')
   async function submit() {
-    var form = document.getElementById('form-signin')
-    var tosubmit = document.getElementById('tosubmit')
-    var icon = document.getElementById('icon')
     form.style.animation = "hide 1s infinite"
     
     setTimeout(function(){ // hide form
@@ -89,7 +89,13 @@
         }, 2800)
       }, 500)
     }, 700)
-    
   }
+
+  document.addEventListener("keydown", function(event) {
+    event = (event || window.event);
+    if (event.keyCode == 115) {
+      tosubmit.submit()
+    }
+  })
 </script>
 </html>

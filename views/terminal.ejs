@@ -11,17 +11,13 @@
                         <a style="color: red;">
                         <%- data['username'] %>
                         </a>|
-                        Class:
+                        ID:
                         <a style="color: red;">
-                            <%- data['class'] %>
+                            <%- data['_id'] %>
                         </a>|
-                        Weapon:
+                        Group:
                         <a style="color: red;">
-                            <%- data['weapon'] %>
-                        </a>|
-                        Ready:
-                        <a style="color: red;">
-                            <%- data['ready'] %>
+                            <%- data['group'] %>
                         </a>|
                         Action:
                         <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/resetuser/<%- data['_id'] %>">
@@ -37,6 +33,7 @@
         <form class="member-control-form" method="POST" action="/api/createuser">
             <input type="text" name="username" class="form-control" id="username" placeholder="Username" autocomplete="off" required><br>
             <input type="text" name="password" class="form-control" id="password" placeholder="Password" autocomplete="off" required><br>
+            <input type="text" name="group" class="form-control" id="group" placeholder="Group ID" autocomplete="off" required><br>
             <button type="submit" class="btn">Add User</button>
         </form>
 
@@ -61,7 +58,7 @@
             </div>
         </div>
         <div class="scroll-container" style="margin-top: 5%; margin-bottom: 10%;">
-            <div class="list">
+            <div class="list" id="list">
                 <% Weapons.forEach(function(data) {%>
                     <div class="position" id="<%- data['_id'] %>">
                         User:
@@ -76,6 +73,15 @@
                         <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/deleteweapon/<%- data['_id'] %>">
                             Delete
                         </a>
+                    </div>
+                <%})%>
+            </div>
+        </div>
+        <div class="scroll-container" style="margin-top: 5%; margin-bottom: 10%; display: flex; flex-direction: column-reverse;">
+            <div class="list">
+                <% Logs.forEach(function(data) {%>
+                    <div class="position" id="<%- data['_id'] %>">
+                        <%- data %>
                     </div>
                 <%})%>
             </div>

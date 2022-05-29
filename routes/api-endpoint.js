@@ -2,27 +2,41 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser')
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const fs = require("fs")
 const User = require('../models/User')
 const Game = require('../models/Game')
 const Class = require('../models/Class')
 const Weapon = require('../models/Weapon')
 const Version = require('../models/Versions')
+const bcrypt = require("bcryptjs")
 
   router.get('/', (req, res) => {
     res.render('403')
   })
 
   router.post('/createuser', urlencodedParser, (req, res) => {
+    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Created User: " + req.body.username + " Group: " + req.body.group + "\n")
     const regUser = new User({
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      group: req.body.group
     })
-    regUser.save()
-    res.redirect("/terminal")
+
+    bcrypt.genSalt(10, (err, salt) =>
+      bcrypt.hash(regUser.password, salt, (err, hash) => {
+          //SET TO HASH
+          regUser.password = hash
+          regUser.save().then(user => {
+            res.redirect('/terminal')
+          })
+    }))
   })
 
   router.post('/creategame', urlencodedParser, (req, res) => {
     const newGame = new Game({
+      name: req.body.name,
+      group: req.body.group,
       time: req.body.time,
       regeneration: req.body.regeneration,
       regrate: req.body.regrate,
@@ -41,7 +55,7 @@ const Version = require('../models/Versions')
 
   router.post('/createclass', urlencodedParser, async(req, res) => {
     if (await Class.findOne({classname: req.body.classname })) {
-      await Class.findOneAndDelete({ classname: req.body.classname, user: req.user.username})
+      await Class.findOneAndDelete({ classname: req.body.classname, user: req.user._id})
     }
     newClass = new Class({
       classname: req.body.classname,
@@ -51,20 +65,20 @@ const Version = require('../models/Versions')
       armor: req.body.armor,
       knockofftime: req.body.knockofftime,
       regrate: req.body.regrate,
-      user: req.user.username
+      user: req.user._id
     })
     newClass.save()
     res.redirect("/cbuilder")
   })
 
   router.post('/deleteclass', urlencodedParser, async(req, res) => {
-    await Class.findOneAndDelete({ classname: req.body.classname, user: req.body.username })
+    await Class.findOneAndDelete({ classname: req.body.classname, user: req.body.userid })
     res.json({data: "yeet"})
   })
 
   router.post('/changeclass', urlencodedParser, async(req, res) => {
     await User.findOneAndUpdate(
-      { username: req.body.username },
+      { _id: req.body.userid },
       { class: req.body.class }
     )
     res.redirect("/player")
@@ -72,7 +86,7 @@ const Version = require('../models/Versions')
 
   router.post('/createweapon', urlencodedParser, async(req, res) => {
     if (await Weapon.findOne({weaponname: req.body.weaponname })) {
-      await Weapon.findOneAndDelete({ weaponname: req.body.weaponname, user: req.user.username})
+      await Weapon.findOneAndDelete({ weaponname: req.body.weaponname, user: req.user._id})
     }
     newWeapon = new Weapon({
       weaponname: req.body.weaponname,
@@ -80,33 +94,46 @@ const Version = require('../models/Versions')
       reload: req.body.reload,
       magazine: req.body.magazine,
       magreload: req.body.magreload,
-      user: req.user.username
+      user: req.user._id,
+      critrate: req.body.critrate
     })
     newWeapon.save()
     res.redirect("/wbuilder")
   })
 
   router.post('/deleteweapon', urlencodedParser, async(req, res) => {
-    await Weapon.findOneAndDelete({ weaponname: req.body.weaponname, user: req.body.username })
+    await Weapon.findOneAndDelete({ weaponname: req.body.weaponname, user: req.body.userid })
     res.json({data: "yeet"})
   })
 
   router.post('/changeweapon', urlencodedParser, async(req, res) => {
     await User.findOneAndUpdate(
-      { username: req.body.username },
+      { _id: req.body.userid },
       { weapon: req.body.weapon }
     )
     res.redirect("/player")
   })
   
   router.post('/fetchuser', urlencodedParser, async(req, res) => {
-    res.json({
-      class: "Klasse",
-      weapon: "Waffe"
+    await User.findOne({username: req.body.username, group: req.body.group}).then(user => {
+      if (!user) {
+        return res.json({data: "Cant find user"})
+      }
+      res.json({
+        userid: user._id,
+        class: user.class,
+        weapon: user.weapon
+      })
     })
   })
 
-  router.get('/gamesettings', urlencodedParser, async(req, res) => {
+  router.post('/groupplayers', urlencodedParser, async(req, res) => {
+    await User.find({group: req.body.group}, function(err, users) {
+      res.json(users)
+    })
+  })
+
+  router.post('/gamesettings', urlencodedParser, async(req, res) => {
     res.json({
       time: 15,
       regeneration: true,
@@ -123,7 +150,7 @@ const Version = require('../models/Versions')
   })
 
   router.post('/weaponperks', urlencodedParser, async(req, res) => {
-    await Weapon.findOne({ weaponname: req.body.weaponname, user: req.body.username })
+    await Weapon.findOne({ weaponname: req.body.weaponname, user: req.body.userid })
       .then(weapons => {
         if (!weapons) {
           return res.json({data: "Cant find weapon"})
@@ -133,13 +160,14 @@ const Version = require('../models/Versions')
           damage: weapons.damage,
           reload: weapons.reload,
           magazine: weapons.magazine,
-          magreload: weapons.magreload
+          magreload: weapons.magreload,
+          critrate: weapons.critrate
         })
     })
   })
 
   router.post('/classperks', urlencodedParser, async(req, res) => {
-    await Class.findOne({ classname: req.body.classname, user: req.body.username })
+    await Class.findOne({ classname: req.body.classname, user: req.body.userid })
       .then(classes => {
         if (!classes) {
           return res.json({data: "Cant find class"})
@@ -162,6 +190,8 @@ router.post('/weaponvc', urlencodedParser, async(req, res) => {
     { program: "weapon" },
     { version: req.body.version }
   )
+  time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+  fs.appendFileSync('./assets/logs/terminal.txt', time + " | Changed Weapon-Version to: " + req.body.version + "\n")
   res.redirect("/devices")
 })
 
@@ -170,6 +200,8 @@ router.post('/vestvc', urlencodedParser, async(req, res) => {
     { program: "vest" },
     { version: req.body.version }
   )
+  time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+  fs.appendFileSync('./assets/logs/terminal.txt', time + " | Changed Vest-Version to: " + req.body.version + "\n")
   res.redirect("/devices")
 })
 
@@ -178,6 +210,8 @@ router.post('/uploadvest', urlencodedParser, async(req, res) => {
     var file = req.files.file
     var filename = file.name
     file.mv('./downloads/vest/' + filename)
+    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Added file: " + filename + " to Vests\n")
   }
   res.redirect("/devices")
 })
@@ -187,6 +221,8 @@ router.post('/uploadweapon', urlencodedParser, async(req, res) => {
     var file = req.files.file
     var filename = file.name
     file.mv('./downloads/weapon/' + filename)
+    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Added file: " + filename + " to Weapons\n")
   }
   res.redirect("/devices")
 })

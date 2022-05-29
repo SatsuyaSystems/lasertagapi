@@ -202,7 +202,7 @@
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify({"classname": cname, "username": "<%= User.username %>"}) // body data type must match "Content-Type" header
+            body: JSON.stringify({"classname": cname, "userid": "<%= User._id %>"}) // body data type must match "Content-Type" header
             });
             response.json().then(data => {
                 if (data['data']) return alert(data['data'])
@@ -236,7 +236,7 @@
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify({"classname": name.value, "username": "<%= User.username %>"}) // body data type must match "Content-Type" header
+            body: JSON.stringify({"classname": name.value, "userid": "<%= User._id %>"}) // body data type must match "Content-Type" header
             });
             response.json().then(data => {
                 console.log(data['data'])

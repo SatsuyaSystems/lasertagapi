@@ -7,7 +7,7 @@
             <div class="interactionCardTitle"> Selected Class </div>
             <div class="interactionCardContent">
                 <form action="/api/changeclass" method="POST">
-                    <input type="hidden" value="<%- User['username'] %>" name="username">
+                    <input type="hidden" value="<%- User['_id'] %>" name="userid">
                     <select name="class" id="class_select" class="box">
                         <option value="none" selected disabled hidden><%- User['class'] %></option>
                         <% Classes.forEach(function(data) {%>
@@ -22,7 +22,7 @@
             <div class="interactionCardTitle"> Selected Weapon </div>
             <div class="interactionCardContent">
                 <form action="/api/changeweapon" method="POST">
-                    <input type="hidden" value="<%- User['username'] %>" name="username">
+                    <input type="hidden" value="<%- User['_id'] %>" name="userid">
                     <select name="weapon" id="weapon_select" class="box">
                         <option value="none" selected disabled hidden><%- User['weapon'] %></option>
                         <% Weapons.forEach(function(data) {%>

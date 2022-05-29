@@ -1,9 +1,17 @@
 <%- include('./includes/dash.ejs') %>
 <link rel="stylesheet" href="/assets/css/dashboard.css">
-<link rel="stylesheet" href="/assets/css/rangeslider.css">
+<link rel="stylesheet" href="/assets/css/mainscreen.css">
 <section class="home">
     <div class="text">Dashboard</div>
     <div class="dash_container">
-        <p style="color: red;">MEH</p>
+        <div class="scroll-container" style="margin-top: 5%; margin-bottom: 10%; display: flex; flex-direction: column-reverse;">
+            <div class="list">
+                <% Logs.forEach(function(data) {%>
+                    <div class="position" id="<%- data['_id'] %>">
+                        <%- data %>
+                    </div>
+                <%})%>
+            </div>
+        </div>
     </div>
 </section>

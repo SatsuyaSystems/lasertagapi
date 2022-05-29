@@ -9,6 +9,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    group: {
+        type: String,
+        required: true
+    },
     class: {
         type: String,
         default: "none"

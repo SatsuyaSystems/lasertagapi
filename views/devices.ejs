@@ -16,7 +16,7 @@
         <div class="interactionCard">
             <div class="interactionCardTitle"> Weapon  Version</div>
             <div class="interactionCardContent">
-                <form action="/api/weaopnvc" method="POST">
+                <form action="/api/weaponvc" method="POST">
                     <input type="text" placeholder="<%- Weapon['version'] %>" class="box" name="version" autocomplete="off" required>
                     <button type="submit" class="btn">Save Version</button>
                 </form>
@@ -52,7 +52,7 @@
                 <% VestFiles.forEach(function(data) {%>
                     <div class="position" id="<%- data %>">
                         File:
-                        <a style="color: red; text-decoration: none;" href="/downloads/vest/<%- data %>">
+                        <a style="color: red; text-decoration: none;" href="/devices/vestview/<%- data %>">
                         <%- data %>
                         </a>|
                         Action:
@@ -69,7 +69,7 @@
                 <% WeaponFiles.forEach(function(data) {%>
                     <div class="position" id="<%- data %>">
                         File:
-                        <a style="color: red; text-decoration: none;" href="/downloads/weapon/<%- data %>">
+                        <a style="color: red; text-decoration: none;" href="/devices/weaponview/<%- data %>">
                         <%- data %>
                         </a>|
                         Action:
