@@ -1,0 +1,34 @@
+<%- include('./includes/dash.ejs') %>
+<link rel="stylesheet" href="/assets/css/playersettings.css">
+<section class="home">
+    <div class="text">Group Settings</div>
+    <div class="dash_container">
+        <% if (!Group) { %>
+            <div class="interactionCard">
+                <div class="interactionCardTitle"> Create your Group </div>
+                <div class="interactionCardContent">
+                    <form action="/api/creategroup" method="POST">
+                        <input type="hidden" value="<%- User['_id'] %>" name="owner">
+                        <input type="text" placeholder="Your groups name" class="box" name="name" autocomplete="off" required>
+                        <button type="submit" class="btn">Create Now</button>
+                    </form>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="interactionCard">
+                <div class="interactionCardTitle"> Group Info </div>
+                <div class="interactionCardContent">
+                    Name: <%= Group.name %><br>
+                    Code: <%= Group.group %><br>
+                    Game: <%= Group.game %>
+                </div>
+            </div>
+            <div class="interactionCard">
+                <div class="interactionCardTitle"> Group Manager </div>
+                <div class="interactionCardContent">
+                    Delete here
+                </div>
+            </div>
+        <% } %>
+    </div>
+</section>

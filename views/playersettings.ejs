@@ -33,6 +33,26 @@
                 </form>
             </div>
         </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Join Group </div>
+            <div class="interactionCardContent">
+                <form action="/api/joingroup" method="POST">
+                    <input type="hidden" value="<%- User['_id'] %>" name="userid">
+                    <input type="text" placeholder="<%- User['group'] %>" class="box" name="group" autocomplete="off" required>
+                    <button type="submit" class="btn">Join Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Reset All </div>
+            <div class="interactionCardContent">
+                <form action="/api/resetplayer" method="POST">
+                    <input type="hidden" value="<%- User['_id'] %>" name="userid">
+                    <input type="text" placeholder="Type: CONFIRM" class="box" name="confirm" autocomplete="off" required>
+                    <button type="submit" class="btn">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
     
 </section>

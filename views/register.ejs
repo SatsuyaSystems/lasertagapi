@@ -49,24 +49,28 @@
   <body class="text-center">
     
 <main class="form-signin" id="form-signin" style="display: block">
-  <form action="/users/login" method="POST" id="tosubmit">
+  <form action="/users/register" method="POST" id="tosubmit">
     <img class="mb-4" src="/assets/img/3098870.png" alt="" width="100" height="100">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
     <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" placeholder="E-Mail" name="email">
-      <label for="floatingInput">E-Mail</label>
+      <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username">
+      <label for="floatingInput">Username</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
-      <label for="floatingPassword" >Password</label>
+        <input type="text" class="form-control" id="floatingInput2" placeholder="E-Mail" name="email">
+        <label for="floatingInput2" >Email</label>
     </div>
+    <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+        <label for="floatingPassword" >Password</label>
+      </div>
 
     <div class="mb-3">
-        Dont have an Account? Click <a href="/users/register">Here</a>!
+        Have an Account? Click <a href="/users/login">Here</a>!
     </div>
   </form>
-  <button class="w-100 btn btn-lg btn-primary" onclick="submit()">Sign in</button>
+  <button class="w-100 btn btn-lg btn-primary" onclick="submit()">Sign Up</button>
     <p class="mt-5 mb-3 text-muted">&copy; EXPLOIT-SYSTEMS 2022</p>
 </main>
 <div style="margin-left: auto; margin-right: auto; display: none; animation: mymove 3s infinite; opacity: 70%;" id="icon">

@@ -8,6 +8,7 @@ const Game = require('../models/Game')
 const Class = require('../models/Class')
 const Weapon = require('../models/Weapon')
 const Version = require('../models/Versions')
+const Group = require('../models/Group')
 const bcrypt = require("bcryptjs")
 
   router.get('/', (req, res) => {
@@ -16,11 +17,11 @@ const bcrypt = require("bcryptjs")
 
   router.post('/createuser', urlencodedParser, (req, res) => {
     time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Created User: " + req.body.username + " Group: " + req.body.group + "\n")
+    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Created User: " + req.body.username + " E-Mail: " + req.body.email + "\n")
     const regUser = new User({
       username: req.body.username,
       password: req.body.password,
-      group: req.body.group
+      email: req.body.email
     })
 
     bcrypt.genSalt(10, (err, salt) =>
@@ -225,6 +226,28 @@ router.post('/uploadweapon', urlencodedParser, async(req, res) => {
     fs.appendFileSync('./assets/logs/terminal.txt', time + " | Added file: " + filename + " to Weapons\n")
   }
   res.redirect("/devices")
+})
+
+router.post('/joingroup', urlencodedParser, async(req, res) => {
+  await User.findOneAndUpdate(
+    {_id: req.user._id},
+    {group: req.body.group}
+  )
+  res.redirect("/player")
+})
+
+router.post('/creategroup', urlencodedParser, async(req, res) => {
+  Group.findOne({owner: req.body.owner}, function(err, group) {
+    if (group) return res.json({data: "You allready have a group!"})
+    var id = Math.floor(100000 + Math.random() * 900000)
+    const newGroup = new Group({
+      group: id,
+      name: req.body.name,
+      owner: req.body.owner
+    })
+    newGroup.save()
+    res.redirect("/group")
+  })
 })
 
 module.exports = router;

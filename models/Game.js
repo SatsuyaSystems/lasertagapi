@@ -5,7 +5,7 @@ const games = new mongoose.Schema({
         type: String,
         required: true
     },
-    group: {
+    owner: {
         type: String,
         required: true
     },

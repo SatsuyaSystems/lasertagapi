@@ -39,3 +39,13 @@ Start of Terminal Logs
 2022-05-29 12:46:10 | Deleted Weapon: 628d29a351972d05e9570882
 2022-05-29 12:54:48 | Reset User: 628bba474da39e2736a30fa1
 2022-05-29 12:54:50 | Reset User: 628be5cc6078663a5879238d
+2022-05-29 15:32:16 | Created User: test Group: 1234
+2022-05-29 15:50:53 | Deleted User: 6293920030337d072be08ff2
+2022-05-29 15:50:54 | Deleted User: 628bba474da39e2736a30fa1
+2022-05-29 15:51:00 | Reset User: 628be5cc6078663a5879238d
+2022-05-30 15:13:11 | Deleted User: 6294dee8a42ff25de88d3d17
+2022-05-30 15:13:16 | Deleted Weapon: 6293ab2d27fec90bc51880e3
+2022-05-30 15:13:17 | Deleted Weapon: 62936cd830337d072be08f78
+2022-05-30 15:13:20 | Deleted Class: 6293ab8027fec90bc51880fc
+2022-05-30 15:13:22 | Deleted User: 628be5cc6078663a5879238d
+2022-05-30 15:47:34 | Created User: Finn E-Mail: nippelfrei@lasertag.de

@@ -5,13 +5,17 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true
     },
     group: {
         type: String,
-        required: true
+        default: "none"
     },
     class: {
         type: String,
@@ -33,11 +37,11 @@ const UserSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    admin: {
+    terminal: {
         type: Boolean,
         default: false
     },
-    terminal: {
+    isverified: {
         type: Boolean,
         default: false
     }
