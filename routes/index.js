@@ -31,7 +31,6 @@ router.get('/cbuilder', ensureAuthenticated, async(req, res) => {
 })
 
 router.get('/game', ensureAuthenticated, async(req, res) => {
-    if (req.user.admin == false) return res.redirect("/403")
     if (req.useragent.isMobile == true) return res.render('mobile')
     if (req.user.isverified == false) return res.redirect("/users/verify")
     res.render('game', {
@@ -40,14 +39,34 @@ router.get('/game', ensureAuthenticated, async(req, res) => {
 })
 
 router.get('/group', ensureAuthenticated, async(req, res) => {
-    if (req.user.admin == false) return res.redirect("/403")
     if (req.useragent.isMobile == true) return res.render('mobile')
     if (req.user.isverified == false) return res.redirect("/users/verify")
     Groups.findOne({owner: req.user._id}, function(err, group) {
-        res.render('group', {
-            User: req.user,
-            Group: group
-        })
+        if(group) {
+            Users.find({group: group.group}, function(err, users) {
+                res.render('group', {
+                    User: req.user,
+                    Group: group,
+                    Users: users
+                })
+            })
+        } else {
+            res.render('group', {
+                User: req.user,
+                Group: group,
+                Users: "users"
+            })
+        }
+    })
+})
+
+router.get('/invite/:id', ensureAuthenticated, async(req, res) => {
+    await Users.findOneAndUpdate(
+        {_id: req.user._id},
+        {group: req.params.id}
+    )
+    res.render('invite', {
+        User: req.user
     })
 })
 
@@ -105,7 +124,7 @@ router.get('/terminal/resetuser/:id', ensureAuthenticated, async(req, res) => {
     if (req.user.terminal == false) return res.redirect("/403")
     await Users.findOneAndUpdate(
         { _id: req.params.id },
-        { class: "none", weapon: "none" }
+        { class: "none", weapon: "none", group: "none" }
     )
     time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
     fs.appendFileSync('./assets/logs/terminal.txt', time + " | Reset User: " + req.params.id + "\n")

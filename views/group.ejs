@@ -17,7 +17,7 @@
         <% } else { %>
             <div class="interactionCard">
                 <div class="interactionCardTitle"> Group Info </div>
-                <div class="interactionCardContent">
+                <div class="interactionCardContent" style="font-size: larger;">
                     Name: <%= Group.name %><br>
                     Code: <%= Group.group %><br>
                     Game: <%= Group.game %>
@@ -26,9 +26,104 @@
             <div class="interactionCard">
                 <div class="interactionCardTitle"> Group Manager </div>
                 <div class="interactionCardContent">
-                    Delete here
+                    <button class="btn" style="margin-top: 0;" onclick="resetGroup()">Reset Group (WIP)</button>
+                    <button class="btn" onclick="deleteGroup()">Delete Group</button>
                 </div>
             </div>
+            <div class="interactionCard">
+                <div class="interactionCardTitle"> Selected Game </div>
+                <div class="interactionCardContent">
+                    <form action="/api/groupgame" method="POST">
+                        <input type="hidden" value="<%- Group['_id'] %>" name="group">
+                        <select name="class" id="class_select" class="box">
+                            <option value="none" selected disabled hidden>none</option>
+                            <option value="-">---> Presets <---</option>
+                            <option value="ffa">Free for All</option>
+                            <option value="td">Team-Deathmatch</option>
+                            <option value="jn">Juggernaut</option>
+                            <option value="-">---> Custom Games <---</option>
+                        </select>
+                        <button type="submit" class="btn">Save Game</button>
+                    </form>
+                </div>
+            </div>
+            <div class="interactionCard">
+                <div class="interactionCardTitle"> Invite Link </div>
+                <div class="interactionCardContent">
+                        <div class="box">
+                            <div class="noscroll" id="invite" style="margin-top: 3px; overflow-x: scroll;">
+                                http://192.168.4.63:4479/invite/<%- Group['group'] %>
+                            </div>
+                        </div>
+                        <button onclick="copyLink()" class="btn">Copy Link (needs https)</button>
+                </div>
+            </div>
+            <div class="scroll-container" style="float: left; width: 88%;">
+                <div class="list">
+                    <div class="position" id="1">
+                        <a style="color: lawngreen;">
+                            List of all Users in your group
+                        </a>
+                    </div>
+                    <% Users.forEach(function(data) {%>
+                        <div class="position" id="<%- data['_id'] %>">
+                            Username:
+                            <a style="color: red;">
+                            <%- data['username'] %>
+                            </a>|
+                            Killstreak:
+                            <a style="color: red;">
+                                <%- data['killstreak'] %>
+                            </a>|
+                            Points:
+                            <a style="color: red;">
+                                <%- data['points'] %>
+                            </a>|
+                            Ready:
+                            <a style="color: red;">
+                                <%- data['ready'] %>
+                            </a>
+                        </div>
+                    <%})%>
+                </div>
+            </div>
+
+            <script>
+                async function resetGroup() {
+                    
+                }
+
+                async function copyLink() {
+                    /* Get the text field */
+                    var copyText = document.getElementById("invite");
+
+                    /* Copy the text inside the text field */
+                    navigator.clipboard.writeText(copyText.innerText);
+                }
+
+                async function deleteGroup() {
+                    let isExecuted = confirm("Are you sure to execute this action?")
+                    if(isExecuted) {
+                        const response = await fetch("/api/deletegroup", {
+                        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json'
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                        body: JSON.stringify({"group": "<%= Group._id %>"}) // body data type must match "Content-Type" header
+                        });
+                        response.json().then(data => {
+                            console.log(data['data'])
+                            location.reload();
+                        });
+                    }
+                }
+            </script>
         <% } %>
     </div>
 </section>

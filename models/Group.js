@@ -15,7 +15,7 @@ const groups = new mongoose.Schema({
     },
     game: {
         type: String,
-        default: "null"
+        default: "none"
     }
 });
 

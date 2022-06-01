@@ -9,10 +9,6 @@ const games = new mongoose.Schema({
         type: String,
         required: true
     },
-    time: {
-        type: Number,
-        required: true
-    },
     regeneration: {
         type: Boolean,
         required: true
@@ -27,6 +23,10 @@ const games = new mongoose.Schema({
     },
     teams: {
         type: Boolean,
+        required: true
+    },
+    teamsize: {
+        type: Number,
         required: true
     },
     friendlyfire: {

@@ -21,7 +21,8 @@ const bcrypt = require("bcryptjs")
     const regUser = new User({
       username: req.body.username,
       password: req.body.password,
-      email: req.body.email
+      email: req.body.email,
+      isverified: true
     })
 
     bcrypt.genSalt(10, (err, salt) =>
@@ -237,7 +238,7 @@ router.post('/joingroup', urlencodedParser, async(req, res) => {
 })
 
 router.post('/creategroup', urlencodedParser, async(req, res) => {
-  Group.findOne({owner: req.body.owner}, function(err, group) {
+  Group.findOne({owner: req.body.owner}, async function(err, group) {
     if (group) return res.json({data: "You allready have a group!"})
     var id = Math.floor(100000 + Math.random() * 900000)
     const newGroup = new Group({
@@ -246,8 +247,17 @@ router.post('/creategroup', urlencodedParser, async(req, res) => {
       owner: req.body.owner
     })
     newGroup.save()
+    await User.findOneAndUpdate(
+      {_id: req.user._id},
+      {group: id}
+    )
     res.redirect("/group")
   })
+})
+
+router.post('/deletegroup', urlencodedParser, async(req, res) => {
+  await Group.findOneAndDelete({ _id: req.body.group })
+  res.json({data: "yeet"})
 })
 
 module.exports = router;

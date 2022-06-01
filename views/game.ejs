@@ -1,8 +1,162 @@
 <%- include('./includes/dash.ejs') %>
-<link rel="stylesheet" href="/assets/css/playersettings.css">
+<link rel="stylesheet" href="/assets/css/gamesettings.css">
+<link rel="stylesheet" href="/assets/css/cbuilder.css">
 <section class="home">
-    <div class="text">Game Settings</div>
+    <div class="text">Game Builder</div>
     <div class="dash_container">
-        
+        <form action="/api/creategame" method="POST">
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Name </div>
+            <div class="interactionCardContent">
+                <input type="text" class="box" placeholder="Name" name="gamename">
+                <div style="margin-top: 3%;">
+                    Enter a name for your game. You can find this game later in your groups settings!
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Lives </div>
+            <div class="interactionCardContent">
+                <select name="lives" id="lives" class="box">
+                    <option value="999" selected>Infinit</option>
+                    <option value="3">3 Lives</option>
+                    <option value="5">5 Lives</option>
+                    <option value="10">10 Lives</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    This will manage how many lives each player has. After loosing all lives the player can get new lives at the team spawn!
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Regeneration </div>
+            <div class="interactionCardContent">
+                <select name="regeneration" id="regeneration" class="box">
+                    <option value="true" selected>Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    Here you can enable or disable the Regeneration!
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Regeneration Rate </div>
+            <div class="interactionCardContent">
+                <select name="regrate" id="regrate" class="box">
+                    <option value="5" selected>5 seconds</option>
+                    <option value="10">10 seconds</option>
+                    <option value="20">20 seconds</option>
+                    <option value="30">30 seconds</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    This will manage the time to regenerate 10HP! <strong>Mark: Regeneration has to be enabled!</strong>
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Teams </div>
+            <div class="interactionCardContent">
+                <select name="teams" id="teams" class="box">
+                    <option value="true" selected>Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    Here you can enable or disable Teams!
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Team Size </div>
+            <div class="interactionCardContent">
+                <select name="teamsize" id="teamsize" class="box">
+                    <option value="2" selected>2 Teams</option>
+                    <option value="3">3 Teams</option>
+                    <option value="4">4 Teams</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    Select the amount of teams for your game! <strong>Mark: Teams has to be enabled!</strong>
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Friendly Fire </div>
+            <div class="interactionCardContent">
+                <select name="friendlyfire" id="friendlyfire" class="box">
+                    <option value="true" selected>Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    If this is enabled and you shot one of your mates, he will die and you receive negativ points!
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Unitabilities </div>
+            <div class="interactionCardContent">
+                <select name="unitabilities" id="unitabilities" class="box">
+                    <option value="true" selected>Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    Turn this to enabled when you want the special abilities of your classes!
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Killstreak </div>
+            <div class="interactionCardContent">
+                <select name="killstreak" id="killstreak" class="box">
+                    <option value="true" selected>Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    Players will get more points for kills! Higher Killstreak equals more points per kill!
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Infinit Ammo </div>
+            <div class="interactionCardContent">
+                <select name="infammo" id="infammo" class="box">
+                    <option value="true" selected>Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    With Infinit Ammo you never need to wait for an magazin change, but you still have to wait until your next shot is available
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Shield </div>
+            <div class="interactionCardContent">
+                <select name="shield" id="shield" class="box">
+                    <option value="true" selected>Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    Here you can simply enable or disable the players shield, no shiels equals faster death!
+                </div>
+            </div>
+        </div>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Items </div>
+            <div class="interactionCardContent">
+                <select name="items" id="items" class="box">
+                    <option value="true" selected>Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+                <div style="margin-top: 3%;">
+                    Depentend on the luck skill of your class you will receive items after a period of time!
+                </div>
+            </div>
+        </div>
+        </form>
+        <div style="margin-left: 3%;">
+            <button class="button-30" onclick="submit()">Save Game</button>
+            <button class="button-30" onclick="loadGame()">Load Game</button>
+            <button class="button-30" onclick="del()">Delete Game</button>
+            <button class="button-30" onclick="clearAll()">Clear All</button>
+        </div> 
     </div>
 </section>

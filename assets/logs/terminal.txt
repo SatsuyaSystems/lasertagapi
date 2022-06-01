@@ -49,3 +49,11 @@ Start of Terminal Logs
 2022-05-30 15:13:20 | Deleted Class: 6293ab8027fec90bc51880fc
 2022-05-30 15:13:22 | Deleted User: 628be5cc6078663a5879238d
 2022-05-30 15:47:34 | Created User: Finn E-Mail: nippelfrei@lasertag.de
+2022-05-31 12:55:59 | Created User: Niki E-Mail: debug@localhost.de
+2022-05-31 13:01:33 | Reset User: 629610600f46a9b63ca32711
+2022-05-31 13:02:34 | Reset User: 629610600f46a9b63ca32711
+2022-05-31 13:02:45 | Reset User: 6294e400bbd2e4609ffaa5b8
+2022-06-01 14:10:28 | Reset User: 6294e400bbd2e4609ffaa5b8
+2022-06-01 14:11:58 | Reset User: 6294e400bbd2e4609ffaa5b8
+2022-06-01 15:47:56 | Reset User: 6294e400bbd2e4609ffaa5b8
+2022-06-01 18:26:37 | Reset User: 6294e400bbd2e4609ffaa5b8
