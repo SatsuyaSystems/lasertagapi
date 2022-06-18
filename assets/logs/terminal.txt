@@ -57,3 +57,5 @@ Start of Terminal Logs
 2022-06-01 14:11:58 | Reset User: 6294e400bbd2e4609ffaa5b8
 2022-06-01 15:47:56 | Reset User: 6294e400bbd2e4609ffaa5b8
 2022-06-01 18:26:37 | Reset User: 6294e400bbd2e4609ffaa5b8
+2022-06-08 18:13:37 | Reset User: 62a0e5f4a3787d079b61e9db
+2022-06-08 18:13:44 | Deleted User: 62a0e5f4a3787d079b61e9db

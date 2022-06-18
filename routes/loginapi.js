@@ -15,7 +15,7 @@ var transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   auth: {
     user: 'satsuyaos@gmail.com',
-    pass: 'satsuyasbattleground4479'
+    pass: 'lsmstygplnifnffu'//'satsuyasbattleground4479'
   }
 });
 
