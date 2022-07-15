@@ -27,7 +27,7 @@ app.use(session({
     resave: true,
     name: 'satsuyaos',
     cookie: {
-        sameSite: true, maxAge: 86400 * 1000
+        maxAge: 86400 * 1000
     },
     saveUninitialized: true
 }))
