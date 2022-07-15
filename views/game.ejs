@@ -4,7 +4,7 @@
 <section class="home">
     <div class="text">Game Builder</div>
     <div class="dash_container">
-        <form action="/api/creategame" method="POST">
+        <form action="/api/creategame" method="POST" id="gameform">
         <div class="interactionCard">
             <div class="interactionCardTitle"> Name </div>
             <div class="interactionCardContent">
@@ -158,6 +158,12 @@
             <button class="button-30" onclick="loadGame()">Load Game</button>
             <button class="button-30" onclick="del()">Delete Game</button>
             <button class="button-30" onclick="clearAll()">Clear All</button>
-        </div> 
+        </div>
+        <script>
+            async function submit() {
+                const form = document.getElementById("gameform")
+                form.submit()
+            }
+        </script>
     </div>
 </section>

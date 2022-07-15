@@ -37,13 +37,13 @@ const bcrypt = require("bcryptjs")
 
   router.post('/creategame', urlencodedParser, (req, res) => {
     const newGame = new Game({
-      name: req.body.name,
-      group: req.body.group,
-      time: req.body.time,
+      name: req.body.gamename,
+      owner: req.user._id,
       regeneration: req.body.regeneration,
       regrate: req.body.regrate,
       lives: req.body.lives,
       teams: req.body.teams,
+      teamsize: req.body.teamsize,
       friendlyfire: req.body.friendlyfire,
       unitabilities: req.body.unitabilities,
       killstreak: req.body.killstreak,
@@ -52,7 +52,7 @@ const bcrypt = require("bcryptjs")
       items: req.body.items
     })
     newGame.save()
-    res.send("done!")
+    res.redirect("/game")
   })
 
   router.post('/createclass', urlencodedParser, async(req, res) => {
