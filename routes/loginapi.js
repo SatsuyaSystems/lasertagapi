@@ -77,9 +77,11 @@ router.post('/register', urlencodedParser, [
 })
 
 router.get('/logout', (req, res) => {
-    req.logout()
-    res.redirect('/users/login')
-})
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/users/login');
+      });
+});
 
 router.get('/verify', (req, res) => {
     req.logout()
