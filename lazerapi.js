@@ -23,8 +23,12 @@ app.use('/downloads', express.static(__dirname + '/downloads'))
 
 //SESSION
 app.use(session({
-    secret: 'secret',
+    secret: [process.env.SESSIONSECRET,process.env.SESSIONSECRET_1, process.env.SESSIONSECRET_2],
     resave: true,
+    name: 'satsuyaos',
+    cookie: {
+        sameSite: true, maxAge: 86400 * 1000
+    },
     saveUninitialized: true
 }))
 
@@ -36,10 +40,6 @@ app.use(passport.session())
 app.use(flash())
 
 //ROUTES
-app.get('/filter', function(req, res){
-    if (req.useragent.isCurl == true) return res.send("NO CURLS")
-    res.send(req.useragent);
-});
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/loginapi'));
 app.use('/version', require("./routes/versions"));
@@ -62,7 +62,7 @@ app.set('view engine', 'ejs')
 
 //DB CONNECT
 mongoose.connect(
-    "mongodb+srv://root:VuXOeMHiDl9MXfJU@os.mwmkg.mongodb.net/lasertag?retryWrites=true&w=majority",
+    process.env.DB,
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
     () => console.log('MongoDB connectet!')
 );
