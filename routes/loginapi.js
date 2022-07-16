@@ -8,14 +8,13 @@ const { urlencoded } = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const passport = require('passport')
 const bcrypt = require("bcryptjs")
-
 const nodemailer = require("nodemailer")
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
   auth: {
     user: 'satsuyaos@gmail.com',
-    pass: 'lsmstygplnifnffu'//'satsuyasbattleground4479'
+    pass: 'lsmstygplnifnffu'
   }
 });
 
@@ -67,7 +66,7 @@ router.post('/register', urlencodedParser, [
                             from: '"Satsuyas Battleground" <satsuyaos@gmail.com>', // sender address
                             to: req.body.email, // list of receivers
                             subject: "Account Verification", // Subject line
-                            html: "<p>Thanks for registering on Satsuyas Battleground<p><br>Click on this link to verify your Account!<br><a href='http://192.168.4.63:4479/users/verify/"+user._id+"'>https://satsuya.de/users/verify/"+user._id+"</a>", // html body
+                            html: "Click on this link to verify your Account!<br><a href='http://192.168.4.63:4479/users/verify/"+user._id+"'>https://satsuya.de/users/verify/"+user._id+"</a>", // html body
                         });
                         
                     res.redirect('/users/login')

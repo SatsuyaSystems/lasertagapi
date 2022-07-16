@@ -260,4 +260,12 @@ router.post('/deletegroup', urlencodedParser, async(req, res) => {
   res.json({data: "yeet"})
 })
 
+router.post('/groupgame', urlencodedParser, async(req, res) => {
+  await Group.findOneAndUpdate(
+    {_id: req.body.group},
+    {game: req.body.game}
+  )
+  res.redirect("/group")
+})
+
 module.exports = router;

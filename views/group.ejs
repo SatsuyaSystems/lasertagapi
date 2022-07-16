@@ -20,7 +20,12 @@
                 <div class="interactionCardContent" style="font-size: larger;">
                     Name: <%= Group.name %><br>
                     Code: <%= Group.group %><br>
-                    Game: <%= Group.game %>
+                    Game: 
+                        <% if (Group.game == "Free for All" || Group.game == "Team-Deathmatch" || Group.game == "Juggernaut" || Group.game == "-") { %>
+                            <%= Group.game %>
+                        <% } else { %>
+                            Custom
+                        <% } %>                    
                 </div>
             </div>
             <div class="interactionCard">
@@ -35,13 +40,16 @@
                 <div class="interactionCardContent">
                     <form action="/api/groupgame" method="POST">
                         <input type="hidden" value="<%- Group['_id'] %>" name="group">
-                        <select name="class" id="class_select" class="box">
-                            <option value="none" selected disabled hidden>none</option>
+                        <select name="game" id="game_select" class="box">
+                            <!-- <option value="none" selected disabled hidden>none</option> -->
                             <option value="-">---> Presets <---</option>
-                            <option value="ffa">Free for All</option>
-                            <option value="td">Team-Deathmatch</option>
-                            <option value="jn">Juggernaut</option>
+                            <option value="Free for All">Free for All</option>
+                            <option value="Team-Deathmatch">Team-Deathmatch</option>
+                            <option value="Juggernaut">Juggernaut</option>
                             <option value="-">---> Custom Games <---</option>
+                            <% Games.forEach(function(data) {%>
+                                <option value="<%- data['_id'] %>"><%- data['name'] %></option>
+                            <%})%>
                         </select>
                         <button type="submit" class="btn">Save Game</button>
                     </form>

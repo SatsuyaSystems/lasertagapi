@@ -6,6 +6,7 @@ const Classes = require('../models/Class')
 const Weapons = require('../models/Weapon')
 const Versions = require('../models/Versions')
 const Groups = require('../models/Group')
+const Games = require('../models/Game')
 const fs = require("fs")
 
 router.get('/', ensureAuthenticated, async(req, res) => {
@@ -44,10 +45,13 @@ router.get('/group', ensureAuthenticated, async(req, res) => {
     Groups.findOne({owner: req.user._id}, function(err, group) {
         if(group) {
             Users.find({group: group.group}, function(err, users) {
-                res.render('group', {
-                    User: req.user,
-                    Group: group,
-                    Users: users
+                Games.find({owner: req.user._id}, function(err, games) {
+                    res.render('group', {
+                        User: req.user,
+                        Group: group,
+                        Users: users,
+                        Games: games
+                    }) 
                 })
             })
         } else {
