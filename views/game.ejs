@@ -8,7 +8,7 @@
         <div class="interactionCard">
             <div class="interactionCardTitle"> Name </div>
             <div class="interactionCardContent">
-                <input type="text" class="box" placeholder="Name" name="gamename">
+                <input type="text" class="box" id="name" placeholder="Name" name="gamename">
                 <div style="margin-top: 3%;">
                     Enter a name for your game. You can find this game later in your groups settings!
                 </div>
@@ -160,6 +160,19 @@
             <button class="button-30" onclick="clearAll()">Clear All</button>
         </div>
         <script>
+            const name = document.getElementById("name")
+            const regeneration = document.getElementById("regeneration")
+            const regrate = document.getElementById("regrate")
+            const lives = document.getElementById("lives")
+            const teams = document.getElementById("teams")
+            const teamsize = document.getElementById("teamsize")
+            const friendlyfire = document.getElementById("friendlyfire")
+            const unitabilities = document.getElementById("unitabilities")
+            const killstreak = document.getElementById("killstreak")
+            const infammo = document.getElementById("infammo")
+            const shield = document.getElementById("shield")
+            const items = document.getElementById("items")
+
             async function submit() {
                 const form = document.getElementById("gameform")
                 form.submit()
@@ -167,6 +180,39 @@
 
             async function loadGame() {
                 
+            }
+
+            async function loadGame() {
+                let cname = window.prompt("Enter game name","")
+                if (cname == null) return console.log("abort")
+                const response = await fetch("/api/usergame", {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    redirect: 'follow', // manual, *follow, error
+                    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: JSON.stringify({"name": cname, "userid": "<%= User._id %>"}) // body data type must match "Content-Type" header
+                    });
+                    response.json().then(data => {
+                        if (data['data']) return alert(data['data'])
+                        name.value = data['name']
+                        regeneration.value = data['regeneration']
+                        regrate.value = data['regrate']
+                        lives.value = data['lives']
+                        teams.value = data['teams']
+                        teamsize.value = data['teamsize']
+                        friendlyfire.value = data['friendlyfire']
+                        unitabilities.value = data['unitabilities']
+                        killstreak.value = data['killstreak']
+                        infammo.value = data['infammo']
+                        shield.value = data['shield']
+                        items.value = data['items']
+                    });
             }
         </script>
     </div>

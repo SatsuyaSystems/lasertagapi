@@ -35,7 +35,10 @@ const bcrypt = require("bcryptjs")
     }))
   })
 
-  router.post('/creategame', urlencodedParser, (req, res) => {
+  router.post('/creategame', urlencodedParser, async (req, res) => {
+    if (await Game.findOne({name: req.body.gamename, owner: req.user._id })) {
+      await Game.findOneAndDelete({ name: req.body.gamename, owner: req.user._id})
+    }
     const newGame = new Game({
       name: req.body.gamename,
       owner: req.user._id,
@@ -56,7 +59,7 @@ const bcrypt = require("bcryptjs")
   })
 
   router.post('/createclass', urlencodedParser, async(req, res) => {
-    if (await Class.findOne({classname: req.body.classname })) {
+    if (await Class.findOne({classname: req.body.classname, user: req.user._id })) {
       await Class.findOneAndDelete({ classname: req.body.classname, user: req.user._id})
     }
     newClass = new Class({
@@ -87,7 +90,7 @@ const bcrypt = require("bcryptjs")
   })
 
   router.post('/createweapon', urlencodedParser, async(req, res) => {
-    if (await Weapon.findOne({weaponname: req.body.weaponname })) {
+    if (await Weapon.findOne({weaponname: req.body.weaponname, user: req.user._id })) {
       await Weapon.findOneAndDelete({ weaponname: req.body.weaponname, user: req.user._id})
     }
     newWeapon = new Weapon({
@@ -135,19 +138,26 @@ const bcrypt = require("bcryptjs")
     })
   })
 
-  router.post('/gamesettings', urlencodedParser, async(req, res) => {
-    res.json({
-      time: 15,
-      regeneration: true,
-      health: true,
-      lives: 3,
-      teams: true,
-      friendlyfire: true,
-      unitabilities: true,
-      killstreak: true,
-      infammo: true,
-      shield: true,
-      items: true
+  router.post('/usergame', urlencodedParser, async(req, res) => {
+    await Game.findOne({owner: req.body.userid, name: req.body.name})
+    .then(game => {
+      if (!game) {
+        return res.json({data: "Cant find game"})
+      }
+      res.json({
+        name: game.name,
+        regeneration: game.regeneration,
+        regrate: game.regrate,
+        lives: game.lives,
+        teams: game.teams,
+        teamsize: game.teamsize,
+        friendlyfire: game.friendlyfire,
+        unitabilities: game.unitabilities,
+        killstreak: game.killstreak,
+        infammo: game.infammo,
+        shield: game.shield,
+        items: game.items
+      })
     })
   })
 
