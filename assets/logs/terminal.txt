@@ -62,3 +62,4 @@ Start of Terminal Logs
 2022-07-15 15:09:15 | Deleted Weapon: 62adf1f741fba4107eeaccb7
 2022-07-15 15:09:17 | Reset User: 6294e400bbd2e4609ffaa5b8
 2022-07-15 15:09:19 | Reset User: 62adef5a41fba4107eeacc8d
+2022-07-17 19:05:52 | Deleted Class: 62d45d55944fc746384c9471

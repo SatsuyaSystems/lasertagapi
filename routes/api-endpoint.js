@@ -58,6 +58,11 @@ const bcrypt = require("bcryptjs")
     res.redirect("/game")
   })
 
+  router.post('/deletegame', urlencodedParser, async(req, res) => {
+    await Game.findOneAndDelete({ name: req.body.gamename, owner: req.user._id })
+    res.json({data: "yeet"})
+  })
+
   router.post('/createclass', urlencodedParser, async(req, res) => {
     if (await Class.findOne({classname: req.body.classname, user: req.user._id })) {
       await Class.findOneAndDelete({ classname: req.body.classname, user: req.user._id})

@@ -5,7 +5,7 @@
 <section class="home">
     <div class="text">Weapon Builder</div>
     <div class="dash_container">
-        <form action="/api/createweapon" method="POST">
+        <form action="/api/createweapon" method="POST" id="weaponform">
             <label style="color: white; font-size: larger;">Name</label>
             <div class="info">
                 <div class="field">
@@ -72,8 +72,8 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" class="button-30" value="Save Weapon">
         </form>
+        <button class="button-30" onclick="submit()">Save Weapon</button>
         <button class="button-30" onclick="loadWeapon()">Load Weapon</button>
         <button class="button-30" onclick="del()">Delete Weapon</button>
         <button class="button-30" onclick="clearAll()">Clear All</button>
@@ -227,5 +227,9 @@
         m3.innerText = "?"
         s4.value = 0
         m4.innerText = "?"
+    }
+    async function submit() {
+        const form = document.getElementById("weaponform")
+        form.submit()
     }
   </script>

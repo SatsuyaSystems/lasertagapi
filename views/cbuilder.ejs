@@ -5,7 +5,7 @@
 <section class="home">
     <div class="text">Class Builder</div>
     <div class="dash_container">
-        <form action="/api/createclass" method="POST">
+        <form action="/api/createclass" method="POST" id="classform">
             <label style="color: white; font-size: larger;">Name</label>
             <div class="info">
                 <div class="field">
@@ -84,8 +84,8 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" class="button-30" value="Save Class">
         </form>
+        <button class="button-30" onclick="submit()">Save Class</button>
         <button class="button-30" onclick="loadClass()">Load Class</button>
         <button class="button-30" onclick="del()">Delete Class</button>
         <button class="button-30" onclick="clearAll()">Clear All</button>
@@ -259,5 +259,10 @@
         m5.innerText = "?"
         s6.value = 0
         m6.innerText = "?"
+    }
+
+    async function submit() {
+        const form = document.getElementById("classform")
+        form.submit()
     }
   </script>
