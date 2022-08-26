@@ -14,7 +14,7 @@ var transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   auth: {
     user: 'satsuyaos@gmail.com',
-    pass: 'lsmstygplnifnffu'
+    pass: 'yjetmrvndqxzfeub'
   }
 });
 
@@ -66,7 +66,7 @@ router.post('/register', urlencodedParser, [
                             from: '"Satsuyas Battleground" <satsuyaos@gmail.com>', // sender address
                             to: req.body.email, // list of receivers
                             subject: "Account Verification", // Subject line
-                            html: "Click on this link to verify your Account!<br><a href='http://192.168.4.63:4479/users/verify/"+user._id+"'>https://satsuya.de/users/verify/"+user._id+"</a>", // html body
+                            html: "Click on this link to verify your Account!<br><a href='http://satsuya.de/users/verify/"+user._id+"'>https://satsuya.de/users/verify/"+user._id+"</a>", // html body
                         });
                         
                     res.redirect('/users/login')
@@ -83,7 +83,10 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/verify', (req, res) => {
-    req.logout()
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/users/login');
+      });
     res.render('verify')
 })
 
