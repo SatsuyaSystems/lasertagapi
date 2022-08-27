@@ -98,4 +98,27 @@ router.get('/verify/:id', async(req, res) => {
     res.redirect("/dashboard")
 })
 
+router.post('/resetpassword', urlencodedParser, async (req, res) => {
+    await User.findOne({email: req.body.indent}, async (err, user) => {
+        if(user){
+            var randomstring = Math.random().toString(36).slice(-8);
+            bcrypt.genSalt(10, (err, salt) =>
+                bcrypt.hash(randomstring, salt, async (err, hash) => {
+                    await User.findOneAndUpdate(
+                        {email: user.email},
+                        {password: hash}
+                    )
+                })
+            )
+            await transporter.sendMail({
+                from: '"Satsuyas Battleground" <satsuyaos@gmail.com>', // sender address
+                to: user.email, // list of receivers
+                subject: "Password reset!", // Subject line
+                html: "Here is your new password: " + randomstring + "<br>You can change it in PLAYER SETTINGS", // html body
+            });
+        }
+        res.redirect("/users/login")
+    })
+})
+
 module.exports = router;

@@ -47,6 +47,20 @@
     <link href="/assets/css/signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
+
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <p>PASSWORD RESET</p>
+        <form action="/users/resetpassword" method="POST">
+          <input type="text" placeholder="Email" name="indent" required>
+          <input type="submit" value="Submit">
+        </form>
+        <p style="margin-top: 5px;">If there is an account on your mail<br>you will receive an email!</p>
+      </div>
+    
+    </div>
     
 <main class="form-signin" id="form-signin" style="display: block">
   <form action="/users/login" method="POST" id="tosubmit">
@@ -63,7 +77,8 @@
     </div>
 
     <div class="mb-3">
-        Dont have an Account? Click <a href="/users/register">Here</a>!
+        Dont have an account? Click <a href="/users/register">Here</a>!<br>
+        <a onclick="resetmodal()">Forgot your password?</a>
     </div>
   </form>
   <button class="w-100 btn btn-lg btn-primary" onclick="submit()">Sign in</button>
@@ -100,5 +115,18 @@
       submit()
     }
   })
+  // Get the modal
+var modal = document.getElementById("myModal");
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+  async function resetmodal() {
+    modal.style.display = "block";
+  }
 </script>
 </html>

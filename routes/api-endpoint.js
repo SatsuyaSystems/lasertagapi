@@ -35,6 +35,17 @@ const bcrypt = require("bcryptjs")
     }))
   })
 
+  router.post('/changeuserpw', urlencodedParser, (req, res) => {
+    bcrypt.genSalt(10, (err, salt) =>
+      bcrypt.hash(req.body.password, salt, async (err, hash) => {
+          await User.findOneAndUpdate(
+            {_id: req.body.userid},
+            {password: hash}
+          )
+          res.redirect("/users/logout")
+    }))
+  })
+
   router.post('/creategame', urlencodedParser, async (req, res) => {
     if (await Game.findOne({name: req.body.gamename, owner: req.user._id })) {
       await Game.findOneAndDelete({ name: req.body.gamename, owner: req.user._id})

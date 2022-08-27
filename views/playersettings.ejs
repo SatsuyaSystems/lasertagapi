@@ -44,11 +44,11 @@
             </div>
         </div>
         <div class="interactionCard">
-            <div class="interactionCardTitle"> Reset All </div>
+            <div class="interactionCardTitle"> Change Password </div>
             <div class="interactionCardContent">
-                <form action="/api/resetplayer" method="POST">
+                <form action="/api/changeuserpw" method="POST">
                     <input type="hidden" value="<%- User['_id'] %>" name="userid">
-                    <input type="text" placeholder="Type: CONFIRM" class="box" name="confirm" autocomplete="off" required>
+                    <input type="password" placeholder="New Password" class="box" name="password" autocomplete="off" required>
                     <button type="submit" class="btn">Submit</button>
                 </form>
             </div>
