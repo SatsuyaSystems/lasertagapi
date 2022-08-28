@@ -69,3 +69,5 @@ Start of Terminal Logs
 2022-08-28 12:22:11 | Deleted File in Weapons: main.py
 2022-08-28 12:22:13 | Deleted File in Vests: irdecoder.py
 2022-08-28 12:22:14 | Deleted File in Vests: main.py
+2022-08-28 12:26:07 | Added file: New Empty File to Vests
+2022-08-28 12:26:31 | Deleted File in Vests: New Empty File
