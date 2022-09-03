@@ -148,6 +148,14 @@ const bcrypt = require("bcryptjs")
     })
   })
 
+  router.post('/fetchgroupgame', urlencodedParser, async(req, res) => {
+    await Group.findOne({group: req.body.group}, async(err, group) => {
+      await Game.findOne({_id: group.game}, async(err, game) => {
+        res.json(game)
+      })
+    })
+  })
+
   router.post('/groupplayers', urlencodedParser, async(req, res) => {
     await User.find({group: req.body.group}, function(err, users) {
       res.json(users)

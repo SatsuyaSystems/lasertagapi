@@ -71,3 +71,6 @@ Start of Terminal Logs
 2022-08-28 12:22:14 | Deleted File in Vests: main.py
 2022-08-28 12:26:07 | Added file: New Empty File to Vests
 2022-08-28 12:26:31 | Deleted File in Vests: New Empty File
+2022-08-30 17:16:53 | Added file: reset.py to Vests
+2022-09-02 16:09:10 | Changed Vest-Version to: 1.0.1
+2022-09-02 16:14:03 | Deleted User: 62fe6966a0994b077abfa2cb
