@@ -198,7 +198,7 @@ body.dark .sidebar header .toggle{
     border-radius: 6px;
     text-decoration: none;
     transition: var(--tran-03);
-    border: 1px outset #650d68;
+    border: 1px #650d68 solid;
 }
 
 .sidebar li a:hover{
