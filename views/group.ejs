@@ -42,11 +42,11 @@
                         <input type="hidden" value="<%- Group['_id'] %>" name="group">
                         <select name="game" id="game_select" class="box">
                             <!-- <option value="none" selected disabled hidden>none</option> -->
-                            <option value="-">---> Presets <---</option>
+                            <option value="none">---> Presets <---</option>
                             <option value="Free for All">Free for All</option>
                             <option value="Team-Deathmatch">Team-Deathmatch</option>
                             <option value="Juggernaut">Juggernaut</option>
-                            <option value="-">---> Custom Games <---</option>
+                            <option value="none">---> Custom Games <---</option>
                             <% Games.forEach(function(data) {%>
                                 <option value="<%- data['_id'] %>"><%- data['name'] %></option>
                             <%})%>
