@@ -2,12 +2,12 @@
     margin-bottom: 3%;
     color: black;
     height: 200px;
-    background-color: #505050;
+    background-color: #10001a;
     margin-left: 3%;
     width: 45%;
     border-radius: 15px;
     float: left;
-    box-shadow: 0 0 1em 0 #505050;
+    box-shadow: 0 0 1em 0 #000;
 }
 
 .interactionCardTitle {
@@ -25,17 +25,64 @@
     margin-right: 35px;
 }
 
+
+@keyframes rainbow{
+    100%,0%{
+        color: rgb(255,0,0);
+    }
+    8%{
+        color: rgb(255,127,0);
+    }
+    16%{
+        color: rgb(255,255,0);
+    }
+    25%{
+        color: rgb(127,255,0);
+    }
+    33%{
+        color: rgb(0,255,0);
+    }
+    41%{
+        color: rgb(0,255,127);
+    }
+    50%{
+        color: rgb(0,255,255);
+    }
+    58%{
+        color: rgb(0,127,255);
+    }
+    66%{
+        color: rgb(0,0,255);
+    }
+    75%{
+        color: rgb(127,0,255);
+    }
+    83%{
+        color: rgb(255,0,255);
+    }
+    91%{
+        color: rgb(255,0,127);
+    }
+}
+
 .box {
     width: 120px;
     height: 35px;
-    border: 1px solid #999;
+    border: 1px solid #000; /*999*/
     font-size: 18px;
-    color: #1c87c9;
-    background-color: #eee;
+    color: magenta; /*1c87c9*/
+    /*animation: rainbow 60s linear;*/
+    box-shadow: 0 0 0.5em #ff00ef38;
+	animation-iteration-count: infinite;
+    background-color: #00000052; /*eee*/
     border-radius: 5px;
     min-width:100%;
     text-align: center;
     }
+select option {
+    background-color: transparent;
+    color: #fff;
+}
     .btn {
     color: #fff;
     display: inline-block;
@@ -46,8 +93,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: #007bff;
-    border: 1px solid #007bff;
+    background-color: #3e224291;
+    border: 1px solid #15151591;
     padding: .375rem .75rem;
     font-size: 1rem;
     line-height: 1.5;

@@ -1,11 +1,11 @@
 .range{
     height: 80px;
     width: 100%;
-    background: #fff;
+    background-color: #10001a; /*505050*/
     border-radius: 10px;
     padding: 0 65px 0 45px;
-    box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
-    margin-bottom: 2%;
+    box-shadow: 0 0 1em 0 #000;
+    margin-bottom: 2%
   }
   .sliderValue{
     position: relative;
