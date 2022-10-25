@@ -58,7 +58,7 @@ app.post('*', async(req, res) => {
 
 
 //TEMPLATING ENGINE
-app.set('views', './views')
+app.set('views', ['./views/desktop', './views/mobile'])
 app.set('view engine', 'ejs')
 
 //DB CONNECT
