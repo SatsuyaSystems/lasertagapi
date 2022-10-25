@@ -31,7 +31,7 @@ body{
 }
 
 ::selection{
-    background-color: var(--primary-color);
+    background-color: #002fff8c;
     color: #fff;
 }
 
