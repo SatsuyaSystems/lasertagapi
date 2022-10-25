@@ -1,9 +1,22 @@
 <%- include('./includes/dash.ejs') %>
 <link rel="stylesheet" href="/assets/css/gamesettings.css">
 <link rel="stylesheet" href="/assets/css/cbuilder.css">
+<link rel="stylesheet" href="/assets/css/modal.css">
 <section class="home">
     <div class="text">Game Builder</div>
     <div class="dash_container">
+        <div id="loadModal" class="modal">
+            <div class="modal-content">
+                <p style="margin-bottom: 20px;">Select a game to load..</p>
+                <select id="gameselect" class="box">
+                    <option value="none" selected disabled hidden><%- User['weapon'] %></option>
+                    <% Games.forEach(function(data) {%>
+                        <option value="<%- data['name'] %>"><%- data['name'] %></option>
+                    <%})%>
+                </select>
+                <button class="modal-btn" onclick="loadGame2()">Load Game</button>
+            </div>
+        </div>
         <form action="/api/creategame" method="POST" id="gameform">
         <div class="interactionCard">
             <div class="interactionCardTitle"> Name </div>
@@ -177,14 +190,19 @@
                 const form = document.getElementById("gameform")
                 form.submit()
             }
-
+            var modal = document.getElementById("loadModal");
             async function loadGame() {
-                
+                modal.style.display = "block";
             }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }  
 
-            async function loadGame() {
-                let cname = window.prompt("Enter game name","")
-                if (cname == null) return console.log("abort")
+            async function loadGame2() {
+                let cname = gameselect.value
+                if (cname == "none") return console.log("abort")
                 const response = await fetch("/api/usergame", {
                     method: 'POST', // *GET, POST, PUT, DELETE, etc.
                     mode: 'cors', // no-cors, *cors, same-origin
@@ -213,6 +231,7 @@
                         shield.value = data['shield']
                         items.value = data['items']
                     });
+                    modal.style.display = "none";
             }
 
             async function del() {

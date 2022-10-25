@@ -34,8 +34,11 @@ router.get('/cbuilder', ensureAuthenticated, async(req, res) => {
 router.get('/game', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
     if (req.user.isverified == false) return res.redirect("/users/verify")
-    res.render('game', {
-        User: req.user
+    Games.find({owner: req.user._id}, function(err, games) {
+        res.render('game', {
+            User: req.user,
+            Games: games
+        })
     })
 })
 
