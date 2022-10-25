@@ -103,12 +103,12 @@
 .button-30 {
   align-items: center;
   appearance: none;
-  background-color: #FCFCFD;
-  border-radius: 4px;
+  background-color: #00131a;
+  border-radius: 7px;
   border-width: 0;
   box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
   box-sizing: border-box;
-  color: #36395A;
+  color: #ffffff;
   cursor: pointer;
   display: inline-flex;
   font-family: "JetBrains Mono",monospace;
@@ -117,7 +117,7 @@
   line-height: 1;
   list-style: none;
   overflow: hidden;
-  padding-left: 16px;
+  padding-left: 20px;
   padding-right: 16px;
   position: relative;
   text-align: left;
@@ -130,6 +130,9 @@
   will-change: box-shadow,transform;
   font-size: 18px;
   margin-bottom: 1%;
+  box-shadow: 0 0 2em 0 #0000006e;
+  /* border: #ffffff; */
+  margin-right: 10px;
 }
 
 .button-30:focus {
