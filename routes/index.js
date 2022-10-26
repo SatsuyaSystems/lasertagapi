@@ -7,7 +7,9 @@ const Weapons = require('../models/Weapon')
 const Versions = require('../models/Versions')
 const Groups = require('../models/Group')
 const Games = require('../models/Game')
-const fs = require("fs")
+const fs = require("fs");
+const Class = require('../models/Class');
+const Weapon = require('../models/Weapon');
 
 router.get('/', ensureAuthenticated, async(req, res) => {
     res.redirect('/dashboard')
@@ -26,8 +28,11 @@ router.get('/dashboard', ensureAuthenticated, async(req, res) => {
 router.get('/cbuilder', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
     if (req.user.isverified == false) return res.redirect("/users/verify")
-    res.render('cbuilder', {
-        User: req.user
+    Class.find({user: req.user._id}, function(err, classes) {
+        res.render('cbuilder', {
+            User: req.user,
+            Classes: classes
+        })
     })
 })
 
@@ -80,8 +85,11 @@ router.get('/invite/:id', ensureAuthenticated, async(req, res) => {
 router.get('/wbuilder', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
     if (req.user.isverified == false) return res.redirect("/users/verify")
-    res.render('wbuilder', {
-        User: req.user
+    Weapon.find({user: req.user._id}, function(err, weapons) {
+        res.render('wbuilder', {
+            User: req.user,
+            Weapons: weapons
+        })
     })
 })
 

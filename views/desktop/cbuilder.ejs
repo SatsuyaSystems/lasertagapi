@@ -2,9 +2,22 @@
 <link rel="stylesheet" href="/assets/css/dashboard.css">
 <link rel="stylesheet" href="/assets/css/rangeslider.css">
 <link rel="stylesheet" href="/assets/css/cbuilder.css">
+<link rel="stylesheet" href="/assets/css/modal.css">
 <section class="home">
     <div class="text">Class Builder</div>
     <div class="dash_container">
+        <div id="loadModal" class="modal">
+            <div class="modal-content">
+                <p style="margin-bottom: 20px;">Select a class to load..</p>
+                <select id="classselect" class="box">
+                    <option value="none" selected disabled hidden><%- User['weapon'] %></option>
+                    <% Classes.forEach(function(data) {%>
+                        <option value="<%- data['classname'] %>"><%- data['classname'] %></option>
+                    <%})%>
+                </select>
+                <button class="modal-btn" onclick="loadClass2()">Load Game</button>
+            </div>
+        </div>
         <form action="/api/createclass" method="POST" id="classform">
             <label style="color: white; font-size: larger;">Name</label>
             <div class="info">
@@ -188,9 +201,20 @@
         }
     }
 
+    var modal = document.getElementById("loadModal");
     async function loadClass() {
-        let cname = window.prompt("Enter class name","")
-        if (cname == null) return console.log("abort")
+        modal.style.display = "block";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    async function loadClass2() {
+        let cname = classselect.value
+        if (cname == "none") return console.log("abort")
         const response = await fetch("/api/classperks", {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
@@ -220,6 +244,7 @@
                 s6.value = data['regrate']
                 m6.innerText = data['regrate']
             });
+            modal.style.display = "none";
     }
 
     async function del() {

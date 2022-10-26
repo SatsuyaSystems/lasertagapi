@@ -2,9 +2,22 @@
 <link rel="stylesheet" href="/assets/css/dashboard.css">
 <link rel="stylesheet" href="/assets/css/rangeslider.css">
 <link rel="stylesheet" href="/assets/css/cbuilder.css">
+<link rel="stylesheet" href="/assets/css/modal.css">
 <section class="home">
     <div class="text">Weapon Builder</div>
     <div class="dash_container">
+        <div id="loadModal" class="modal">
+            <div class="modal-content">
+                <p style="margin-bottom: 20px;">Select a weapon to load..</p>
+                <select id="weaponselect" class="box">
+                    <option value="none" selected disabled hidden><%- User['weapon'] %></option>
+                    <% Weapons.forEach(function(data) {%>
+                        <option value="<%- data['weaponname'] %>"><%- data['weaponname'] %></option>
+                    <%})%>
+                </select>
+                <button class="modal-btn" onclick="loadWeapon2()">Load Game</button>
+            </div>
+        </div>
         <form action="/api/createweapon" method="POST" id="weaponform">
             <label style="color: white; font-size: larger;">Name</label>
             <div class="info">
@@ -162,9 +175,20 @@
         }
     }
 
+    var modal = document.getElementById("loadModal");
     async function loadWeapon() {
-        let cname = window.prompt("Enter weapon name","")
-        if (cname == null) return console.log("abort")
+        modal.style.display = "block";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    async function loadWeapon2() {
+        let cname = weaponselect.value
+        if (cname == "none") return console.log("abort")
         const response = await fetch("/api/weaponperks", {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
@@ -192,6 +216,7 @@
                 s5.value = data['critrate']
                 m5.innerText = data['critrate']
         });
+        modal.style.display = "none";
     }
 
     async function del() {
