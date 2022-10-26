@@ -1,6 +1,16 @@
+@keyframes modalframe {
+  0%{
+    opacity: 0%;
+  }
+  100%{
+    opacity: 100%;
+  }
+}
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
+  animation: modalframe 0.3s linear;
   position: fixed; /* Stay in place */
   z-index: 9999; /* Sit on top */
   padding-top: 200px; /* Location of the box */
