@@ -105,7 +105,7 @@ select option {
 }
 
 .scroll-container{
-    border: 2px solid grey;
+    /*border: 2px solid grey;*/
     height: 200px;
     overflow-y: scroll;
     margin-left: 3%;

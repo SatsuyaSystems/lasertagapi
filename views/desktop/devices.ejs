@@ -41,49 +41,55 @@
                 </form>
             </div>
         </div>
+        <div class="interactionCard" style="width: 93%; height: 290px;">
+            <div class="interactionCardTitle"> Script List </div>
+            <div class="interactionCardContent">
+                
+                <div class="scroll-container" style="margin-top: -20px;">
+                    <div class="list">
+                        <div class="position">
+                            <a style="color: lawngreen;">
+                            All files from /downloads/vest/
+                            </a>
+                        </div>
+                        <% VestFiles.forEach(function(data) {%>
+                            <div class="position" id="<%- data %>">
+                                File:
+                                <a style="color: red; text-decoration: none;" href="/devices/vestview/<%- data %>">
+                                <%- data %>
+                                </a>|
+                                Action:
+                                <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/devices/delvest/<%- data %>">
+                                Delete
+                                </a> 
+                                <a style="color: rgb(247, 0, 255); text-decoration: none;" href="/downloads/vest/<%- data %>">
+                                Download
+                                </a>
+                            </div>
+                        <%})%>
+                        <div class="position">
+                            <a style="color: lawngreen;">
+                            All files from /downloads/weapon/
+                            </a>
+                        </div>
+                        <% WeaponFiles.forEach(function(data) {%>
+                            <div class="position" id="<%- data %>">
+                                File:
+                                <a style="color: red; text-decoration: none;" href="/devices/weaponview/<%- data %>">
+                                <%- data %>
+                                </a>|
+                                Action:
+                                <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/devices/delweapon/<%- data %>">
+                                Delete
+                                </a>
+                                <a style="color: rgb(247, 0, 255); text-decoration: none;" href="/downloads/weapon/<%- data %>">
+                                Download
+                                </a>
+                            </div>
+                        <%})%>
+                    </div>
+                </div>
 
-        <div class="scroll-container" style="margin-top: 500px;">
-            <div class="list">
-                <div class="position">
-                    <a style="color: lawngreen;">
-                    All files from /downloads/vest/
-                    </a>
-                </div>
-                <% VestFiles.forEach(function(data) {%>
-                    <div class="position" id="<%- data %>">
-                        File:
-                        <a style="color: red; text-decoration: none;" href="/devices/vestview/<%- data %>">
-                        <%- data %>
-                        </a>|
-                        Action:
-                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/devices/delvest/<%- data %>">
-                        Delete
-                        </a> 
-                        <a style="color: rgb(247, 0, 255); text-decoration: none;" href="/downloads/vest/<%- data %>">
-                        Download
-                        </a>
-                    </div>
-                <%})%>
-                <div class="position">
-                    <a style="color: lawngreen;">
-                    All files from /downloads/weapon/
-                    </a>
-                </div>
-                <% WeaponFiles.forEach(function(data) {%>
-                    <div class="position" id="<%- data %>">
-                        File:
-                        <a style="color: red; text-decoration: none;" href="/devices/weaponview/<%- data %>">
-                        <%- data %>
-                        </a>|
-                        Action:
-                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/devices/delweapon/<%- data %>">
-                        Delete
-                        </a>
-                        <a style="color: rgb(247, 0, 255); text-decoration: none;" href="/downloads/weapon/<%- data %>">
-                        Download
-                        </a>
-                    </div>
-                <%})%>
             </div>
         </div>
     </div>
