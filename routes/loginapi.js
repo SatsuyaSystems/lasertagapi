@@ -83,10 +83,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/verify', (req, res) => {
-    req.logout(function(err) {
-        if (err) { return next(err); }
-        res.redirect('/users/login');
-      });
+    if(req.user.isverified == true) return res.redirect("/dashboard")
     res.render('verify')
 })
 
