@@ -16,8 +16,6 @@ const bcrypt = require("bcryptjs")
   })
 
   router.post('/createuser', urlencodedParser, (req, res) => {
-    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Created User: " + req.body.username + " E-Mail: " + req.body.email + "\n")
     const regUser = new User({
       username: req.body.username,
       password: req.body.password,
@@ -238,8 +236,6 @@ router.post('/weaponvc', urlencodedParser, async(req, res) => {
     { program: "weapon" },
     { version: req.body.version }
   )
-  time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-  fs.appendFileSync('./assets/logs/terminal.txt', time + " | Changed Weapon-Version to: " + req.body.version + "\n")
   res.redirect("/devices")
 })
 
@@ -248,8 +244,6 @@ router.post('/vestvc', urlencodedParser, async(req, res) => {
     { program: "vest" },
     { version: req.body.version }
   )
-  time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-  fs.appendFileSync('./assets/logs/terminal.txt', time + " | Changed Vest-Version to: " + req.body.version + "\n")
   res.redirect("/devices")
 })
 
@@ -258,8 +252,6 @@ router.post('/uploadvest', urlencodedParser, async(req, res) => {
     var file = req.files.file
     var filename = file.name
     file.mv('./downloads/vest/' + filename)
-    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Added file: " + filename + " to Vests\n")
   }
   res.redirect("/devices")
 })
@@ -269,8 +261,6 @@ router.post('/uploadweapon', urlencodedParser, async(req, res) => {
     var file = req.files.file
     var filename = file.name
     file.mv('./downloads/weapon/' + filename)
-    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Added file: " + filename + " to Weapons\n")
   }
   res.redirect("/devices")
 })

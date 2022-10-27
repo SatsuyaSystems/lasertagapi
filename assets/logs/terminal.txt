@@ -1,3 +1,0 @@
-2022-10-27 17:02:16 | Created User: Debug E-Mail: debug@satsuya.de
-2022-10-27 17:13:58 | Created User: Debug E-Mail: debug@satsuya.de
-2022-10-27 17:51:07 | Deleted File in Vests: version.json
