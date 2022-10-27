@@ -1,49 +1,54 @@
-.scroll-container{
-    border: 2px solid grey;
-    height: 200px;
-    overflow-y: scroll;
-    margin-left: 5%;
-    margin-right: 5%;
+.noscroll::-webkit-scrollbar {
+    display: none;
+}
+
+.interactionCard {
+    margin-bottom: 3%;
+    color: black;
+    height: 220px;
+    background-color: #10001a; /*505050*/
+    margin-left: 3%;
+    width: 45%;
+    border-radius: 15px;
+    float: left;
+    box-shadow: 0 0 1em 0 #000;
+}
+
+.interactionCardTitle {
+    margin-top: 5px;
     color: white;
-}
-
-.list {
-    position: relative;
-    margin-left: 10px;
-    margin-top: 0.1%;
     text-align: center;
+    font-size: 30px;
+    font-weight: 500;
 }
 
-.position {
-    margin-top: 1%;
-    margin-bottom: 1%;
-}
-
-.member-control-form {
+.interactionCardContent{
+    color: white;
     margin-top: 3%;
-    margin-bottom: 5%;
-    margin-right: 30%;
-    margin-left: 30%;
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+
+.box {
+    width: 120px;
+    height: 35px;
+    border: 1px solid #000; /*999*/
+    font-size: 18px;
+    color: magenta; /*1c87c9*/
+    /*animation: rainbow 60s linear;*/
+    box-shadow: 0 0 0.5em #ff00ef38;
+	animation-iteration-count: infinite;
+    background-color: #00000052; /*eee*/
+    border-radius: 5px;
+    min-width:100%;
     text-align: center;
+    }
+select option {
+    background-color: transparent;
+    color: #fff;
 }
-
-.form-control {
-    display: block;
-    width: 100%;
-    height: calc(1.5em + .75rem + 2px);
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-.btn {
+    .btn {
     color: #fff;
     display: inline-block;
     font-weight: 400;
@@ -53,11 +58,13 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: #007bff;
-    border: 1px solid #007bff;
+    background-color: #3e224291;
+    border: 1px solid #15151591;
     padding: .375rem .75rem;
     font-size: 1rem;
     line-height: 1.5;
     border-radius: .25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-top: 10px;
+    width: 100%;
 }

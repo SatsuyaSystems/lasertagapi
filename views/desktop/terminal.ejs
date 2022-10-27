@@ -3,88 +3,98 @@
 <section class="home">
     <div class="text">Terminal</div>
     <div class="dash_container">
-        <div class="scroll-container">
-            <div class="list">
-                <% Users.forEach(function(data) {%>
-                    <div class="position" id="<%- data['_id'] %>">
-                        Username:
-                        <a style="color: red;">
-                        <%- data['username'] %>
-                        </a>|
-                        ID:
-                        <a style="color: red;">
-                            <%- data['_id'] %>
-                        </a>|
-                        Group:
-                        <a style="color: red;">
-                            <%- data['group'] %>
-                        </a>|
-                        Action:
-                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/resetuser/<%- data['_id'] %>">
-                            Reset
-                        </a>or
-                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/deleteuser/<%- data['_id'] %>">
-                            Delete
-                        </a>
-                    </div>
-                <%})%>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> Find User </div>
+            <div class="interactionCardContent">
+                <input type="text" class="box" id="email" placeholder="E-Mail" name="email" autocomplete="off">
+                <div style="margin-top: 3%;">
+                    <div id="scan_status">Status: none</div>
+                    <button class="btn" onclick="scanUserByMail()">Scan</button>
+                </div>
             </div>
         </div>
-        <form class="member-control-form" method="POST" action="/api/createuser">
-            <input type="text" name="username" class="form-control" id="username" placeholder="Username" autocomplete="off" required><br>
-            <input type="text" name="password" class="form-control" id="password" placeholder="Password" autocomplete="off" required><br>
-            <input type="email" name="email" class="form-control" id="email" placeholder="E-Mail" autocomplete="off" required><br>
-            <button type="submit" class="btn">Add User</button>
-        </form>
+        <div class="interactionCard">
+            <div class="interactionCardTitle"> User Info </div>
+            <div class="interactionCardContent">
+                <div id="user_name">Name:</div>
+                <div id="user_id">ID:</div>
+                <div id="user_email">E-Mail:</div>
+                <button class="btn" onclick="resetUser()" style="width: 50%;">Reset</button>
+                <button class="btn" onclick="deleteUser()" style="width: 49%;">Delete</button>
+            </div>
+        </div>
+        <div class="interactionCard" style="width: 93%; height: 350px;">
+            <div class="interactionCardTitle"> Create User </div>
+            <div class="interactionCardContent">
+                <input type="text" class="box" id="add_email" placeholder="E-Mail" name="email" autocomplete="off"><br><br>
+                <input type="text" class="box" id="add_username" placeholder="Username" name="username" autocomplete="off"><br><br>
+                <input type="text" class="box" id="add_password" placeholder="Password" name="password" autocomplete="off"><br><br>
+                <button class="btn" onclick="addNewUser()">Add User</button>
+            </div>
+        </div>
+        <script>
+            var scan_status = document.getElementById("scan_status")
+            var user_id = document.getElementById("user_id")
+            var user_name = document.getElementById("user_name")
+            var user_email = document.getElementById("user_email")
+            var delete_id = null
 
-        <div class="scroll-container">
-            <div class="list">
-                <% Classes.forEach(function(data) {%>
-                    <div class="position" id="<%- data['_id'] %>">
-                        User:
-                        <a style="color: red;">
-                        <%- data['user'] %>
-                        </a>|
-                        Class:
-                        <a style="color: red;">
-                            <%- data['classname'] %>
-                        </a>|
-                        Action:
-                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/deleteclass/<%- data['_id'] %>">
-                            Delete
-                        </a>
-                    </div>
-                <%})%>
-            </div>
-        </div>
-        <div class="scroll-container" style="margin-top: 5%; margin-bottom: 10%;">
-            <div class="list" id="list">
-                <% Weapons.forEach(function(data) {%>
-                    <div class="position" id="<%- data['_id'] %>">
-                        User:
-                        <a style="color: red;">
-                        <%- data['user'] %>
-                        </a>|
-                        Weapon:
-                        <a style="color: red;">
-                            <%- data['weaponname'] %>
-                        </a>|
-                        Action:
-                        <a style="color: rgb(25, 0, 255); text-decoration: none;" href="/terminal/deleteweapon/<%- data['_id'] %>">
-                            Delete
-                        </a>
-                    </div>
-                <%})%>
-            </div>
-        </div>
-        <div class="scroll-container" style="margin-top: 5%; margin-bottom: 10%; display: flex; flex-direction: column-reverse;">
-            <div class="list">
-                <% Logs.forEach(function(data) {%>
-                    <div class="position" id="<%- data['_id'] %>">
-                        <%- data %>
-                    </div>
-                <%})%>
-            </div>
-        </div>
+            async function scanUserByMail() {
+                let cname = email.value
+                if (cname == null) return console.log("abort")
+                const response = await fetch("/api/userbymail", {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    redirect: 'follow', // manual, *follow, error
+                    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: JSON.stringify({"email": cname}) // body data type must match "Content-Type" header
+                    });
+                    response.json().then(data => {
+                        if (data['data']) return scan_status.innerHTML = "Status: " + data['data']
+                        scan_status.innerHTML = "Status: User found"
+                        user_name.innerHTML = "Name: " + data['username']
+                        user_id.innerHTML = "ID: " + data['userid']
+                        user_email.innerHTML = "E-Mail: " + email.value
+                        delete_id = data['userid']
+                    });
+            }
+
+            async function addNewUser() {
+                const response = await fetch("/api/createuser", {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    redirect: 'follow', // manual, *follow, error
+                    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: JSON.stringify({"email": add_email.value, "username": add_username.value, "password": add_password.value}) // body data type must match "Content-Type" header
+                    });
+                    window.location.reload()
+            }
+
+            function deleteUser() {
+                if (delete_id == null) return
+                if (confirm("Delete this User?")) {
+                    window.location.replace("/terminal/deleteuser/" + delete_id)
+                }
+            }
+
+            function resetUser() {
+                if (delete_id == null) return
+                if (confirm("Reset this User?")) {
+                    window.location.replace("/terminal/resetuser/" + delete_id)
+                }
+            }
+        </script>
     </div>
 </section>

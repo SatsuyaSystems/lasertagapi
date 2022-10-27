@@ -8,8 +8,6 @@ const Versions = require('../models/Versions')
 const Groups = require('../models/Group')
 const Games = require('../models/Game')
 const fs = require("fs");
-const Class = require('../models/Class');
-const Weapon = require('../models/Weapon');
 
 router.get('/', ensureAuthenticated, async(req, res) => {
     res.redirect('/dashboard')
@@ -28,7 +26,7 @@ router.get('/dashboard', ensureAuthenticated, async(req, res) => {
 router.get('/cbuilder', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
     if (req.user.isverified == false) return res.redirect("/users/verify")
-    Class.find({user: req.user._id}, function(err, classes) {
+    Classes.find({user: req.user._id}, function(err, classes) {
         res.render('cbuilder', {
             User: req.user,
             Classes: classes
@@ -85,7 +83,7 @@ router.get('/invite/:id', ensureAuthenticated, async(req, res) => {
 router.get('/wbuilder', ensureAuthenticated, async(req, res) => {
     if (req.useragent.isMobile == true) return res.render('mobile')
     if (req.user.isverified == false) return res.redirect("/users/verify")
-    Weapon.find({user: req.user._id}, function(err, weapons) {
+    Weapons.find({user: req.user._id}, function(err, weapons) {
         res.render('wbuilder', {
             User: req.user,
             Weapons: weapons
@@ -111,27 +109,18 @@ router.get('/terminal', ensureAuthenticated, async(req, res) => {
     if (req.user.terminal == false) return res.redirect("/403")
     if (req.useragent.isMobile == true) return res.render('mobile')
     if (req.user.isverified == false) return res.redirect("/users/verify")
-    Users.find({}, function(err, users) {
-        Classes.find({}, function(err, classes) {
-            Weapons.find({}, function(err, weapons) {
-                logs = fs.readFileSync("./assets/logs/terminal.txt", "utf-8").split('\n')
-                res.render('terminal', {
-                    User: req.user,
-                    Weapons: weapons,
-                    Classes: classes,
-                    Users: users,
-                    Logs: logs
-                })
-            })
-        })
+    res.render('terminal', {
+        User: req.user
     })
 })
 
 router.get('/terminal/deleteuser/:id', ensureAuthenticated, async(req, res) => {
     if (req.user.terminal == false) return res.redirect("/403")
     await Users.findOneAndDelete({_id: req.params.id})
-    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Deleted User: " + req.params.id + "\n")
+    await Classes.deleteMany({user: req.params.id})
+    await Weapons.deleteMany({user: req.params.id})
+    await Games.deleteMany({owner: req.params.id})
+    await Groups.deleteMany({owner: req.params.id})
     res.redirect("/terminal")
 })
 
@@ -141,24 +130,6 @@ router.get('/terminal/resetuser/:id', ensureAuthenticated, async(req, res) => {
         { _id: req.params.id },
         { class: "none", weapon: "none", group: "none" }
     )
-    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Reset User: " + req.params.id + "\n")
-    res.redirect("/terminal#" + req.params.id)
-})
-
-router.get('/terminal/deleteclass/:id', ensureAuthenticated, async(req, res) => {
-    if (req.user.terminal == false) return res.redirect("/403")
-    await Classes.findOneAndDelete({_id: req.params.id})
-    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Deleted Class: " + req.params.id + "\n")
-    res.redirect("/terminal")
-})
-
-router.get('/terminal/deleteweapon/:id', ensureAuthenticated, async(req, res) => {
-    if (req.user.terminal == false) return res.redirect("/403")
-    await Weapons.findOneAndDelete({_id: req.params.id})
-    time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    fs.appendFileSync('./assets/logs/terminal.txt', time + " | Deleted Weapon: " + req.params.id + "\n")
     res.redirect("/terminal")
 })
 

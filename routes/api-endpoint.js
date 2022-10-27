@@ -148,6 +148,18 @@ const bcrypt = require("bcryptjs")
     })
   })
 
+  router.post('/userbymail', urlencodedParser, async(req, res) => {
+    await User.findOne({email: req.body.email}).then(user => {
+      if (!user) {
+        return res.json({data: "Cant find user"})
+      }
+      res.json({
+        userid: user._id,
+        username: user.username
+      })
+    })
+  })
+
   router.post('/fetchgroupgame', urlencodedParser, async(req, res) => {
     await Group.findOne({group: req.body.group}, async(err, group) => {
       await Game.findOne({_id: group.game}, async(err, game) => {
