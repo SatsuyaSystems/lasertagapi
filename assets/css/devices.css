@@ -124,3 +124,7 @@ select option {
     margin-top: 1%;
     margin-bottom: 1%;
 }
+
+.noscroll::-webkit-scrollbar {
+    display: none;
+}

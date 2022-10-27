@@ -66,33 +66,34 @@
                         <button onclick="copyLink()" class="btn">Copy Link (needs https)</button>
                 </div>
             </div>
-            <div class="scroll-container" style="float: left; width: 88%;">
-                <div class="list">
-                    <div class="position" id="1">
-                        <a style="color: lawngreen;">
-                            List of all Users in your group
-                        </a>
-                    </div>
-                    <% Users.forEach(function(data) {%>
-                        <div class="position" id="<%- data['_id'] %>">
-                            Username:
-                            <a style="color: red;">
-                            <%- data['username'] %>
-                            </a>|
-                            Killstreak:
-                            <a style="color: red;">
-                                <%- data['killstreak'] %>
-                            </a>|
-                            Points:
-                            <a style="color: red;">
-                                <%- data['points'] %>
-                            </a>|
-                            Ready:
-                            <a style="color: red;">
-                                <%- data['ready'] %>
-                            </a>
+            <div class="interactionCard" style="width: 93%; height: 290px;">
+                <div class="interactionCardTitle"> Member List </div>
+                <div class="interactionCardContent">
+                    <div class="scroll-container noscroll" style="float: left; width: 88%; margin-top: -25px;">
+                        <div class="list">
+                            <div class="position" id="1"></div>
+                            <% Users.forEach(function(data) {%>
+                                <div class="position" id="<%- data['_id'] %>">
+                                    Username:
+                                    <a style="color: red;">
+                                    <%- data['username'] %>
+                                    </a>|
+                                    Killstreak:
+                                    <a style="color: red;">
+                                        <%- data['killstreak'] %>
+                                    </a>|
+                                    Points:
+                                    <a style="color: red;">
+                                        <%- data['points'] %>
+                                    </a>|
+                                    Ready:
+                                    <a style="color: red;">
+                                        <%- data['ready'] %>
+                                    </a>
+                                </div>
+                            <%})%>
                         </div>
-                    <%})%>
+                    </div>
                 </div>
             </div>
 
