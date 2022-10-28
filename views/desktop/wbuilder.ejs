@@ -10,7 +10,7 @@
             <div class="modal-content">
                 <p style="margin-bottom: 20px;">Select a weapon to load..</p>
                 <select id="weaponselect" class="box">
-                    <option value="none" selected disabled hidden><%- User['weapon'] %></option>
+                    <option value="none" selected disabled hidden>none</option>
                     <% Weapons.forEach(function(data) {%>
                         <option value="<%- data['weaponname'] %>"><%- data['weaponname'] %></option>
                     <%})%>

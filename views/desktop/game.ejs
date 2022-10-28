@@ -9,7 +9,7 @@
             <div class="modal-content">
                 <p style="margin-bottom: 20px;">Select a game to load..</p>
                 <select id="gameselect" class="box">
-                    <option value="none" selected disabled hidden><%- User['weapon'] %></option>
+                    <option value="none" selected disabled hidden>none</option>
                     <% Games.forEach(function(data) {%>
                         <option value="<%- data['name'] %>"><%- data['name'] %></option>
                     <%})%>
