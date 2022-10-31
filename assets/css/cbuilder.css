@@ -101,38 +101,39 @@
 
 /* CSS */
 .button-30 {
-  align-items: center;
-  appearance: none;
-  background-color: #00131a;
-  border-radius: 7px;
-  border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
-  box-sizing: border-box;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
-  height: 48px;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding-left: 20px;
-  padding-right: 16px;
-  position: relative;
-  text-align: left;
-  text-decoration: none;
-  transition: box-shadow .15s,transform .15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow,transform;
-  font-size: 18px;
-  margin-bottom: 1%;
-  box-shadow: 0 0 2em 0 #0000006e;
-  /* border: #ffffff; */
-  margin-right: 10px;
+	align-items: center;
+	appearance: none;
+	background-color: #07001a;
+	border-radius: 12px;
+	border-width: 1px;
+	box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+	box-sizing: border-box;
+	color: #ff00c0;
+	cursor: pointer;
+	display: inline-flex;
+	font-family: "JetBrains Mono",monospace;
+	height: 61px;
+	justify-content: center;
+	line-height: 1;
+	list-style: none;
+	overflow: hidden;
+	padding-left: 68px;
+	padding-right: 68px;
+	position: relative;
+	text-align: left;
+	text-decoration: none;
+	transition: box-shadow .15s,transform .15s;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	white-space: nowrap;
+	will-change: box-shadow,transform;
+	font-size: 19px;
+	margin-bottom: 1%;
+	box-shadow: 0 0 2em 0 #0000006e;
+	/* border: #ffffff; */
+	margin-right: 22px;
+	border-color: #9700ff5e;
 }
 
 .button-30:focus {
