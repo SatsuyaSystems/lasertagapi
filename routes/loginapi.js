@@ -9,6 +9,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const passport = require('passport')
 const bcrypt = require("bcryptjs")
 const nodemailer = require("nodemailer")
+const fs = require("fs")
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
@@ -62,12 +63,17 @@ router.post('/register', urlencodedParser, [
                     //SET TO HASH
                     regUser.password = hash
                     regUser.save().then(async user => {
-                        await transporter.sendMail({
-                            from: '"Satsuyas Battleground" <satsuyaos@gmail.com>', // sender address
-                            to: req.body.email, // list of receivers
-                            subject: "Account Verification", // Subject line
-                            html: "Click on this link to verify your Account!<br><a href='http://satsuya.de/users/verify/"+user._id+"'>https://satsuya.de/users/verify/"+user._id+"</a>", // html body
-                        });
+                        fs.readFile("./config/emails/verify_email.html", "utf8", async (err, data) => {
+                            if (err) return console.log(err)
+                            const emailData = data.replace("{USERNAME}", req.body.username)
+                            const emailData2 = emailData.replace("{BTNLINK}", "http://127.0.0.1:4479/users/verify/"+user._id)
+                            await transporter.sendMail({
+                                from: '"Satsuyas Battleground" <satsuyaos@gmail.com>', // sender address
+                                to: req.body.email, // list of receivers
+                                subject: "Account Verification", // Subject line
+                                html: emailData2, // html body
+                            });
+                        })
                         
                     res.redirect('/users/login')
                 })
