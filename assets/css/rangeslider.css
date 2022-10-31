@@ -52,7 +52,7 @@
   .field .value{
     position: absolute;
     font-size: 18px;
-    color: #664AFF;
+    color: magenta;
     font-weight: 600;
   }
   .field .value.left{
@@ -65,7 +65,7 @@
     -webkit-appearance: none;
     width: 100%;
     height: 3px;
-    background: #ddd;
+    background: #31006ced;
     border-radius: 5px;
     outline: none;
     border: none;
