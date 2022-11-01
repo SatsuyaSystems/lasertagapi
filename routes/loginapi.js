@@ -113,12 +113,16 @@ router.post('/resetpassword', urlencodedParser, async (req, res) => {
                     )
                 })
             )
-            await transporter.sendMail({
-                from: '"Satsuyas Battleground" <satsuyaos@gmail.com>', // sender address
-                to: user.email, // list of receivers
-                subject: "Password reset!", // Subject line
-                html: "Here is your new password: " + randomstring + "<br>You can change it in PLAYER SETTINGS", // html body
-            });
+            fs.readFile("./config/emails/password_email.html", "utf8", async (err, data) => {
+                emailData = data.replace("{USERNAME}", user.username)
+                emailData2 = emailData.replace("{NEWPW}", randomstring)
+                await transporter.sendMail({
+                    from: '"Satsuyas Battleground" <satsuyaos@gmail.com>', // sender address
+                    to: user.email, // list of receivers
+                    subject: "Password reset!", // Subject line
+                    html: emailData2, // html body
+                });
+            })
         }
         res.redirect("/users/login")
     })
