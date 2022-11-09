@@ -10,7 +10,7 @@ const Games = require('../models/Game')
 const fs = require("fs");
 
 router.post("/auth", urlencodedParser, async (req, res) => {
-    Users.findOne({ email: req.body.email, terminal: true })
+    Users.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
                 return res.json({data: "NO USER"})
