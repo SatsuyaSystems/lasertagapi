@@ -23,7 +23,7 @@ router.post("/auth", urlencodedParser, async (req, res) => {
                 await Classes.find({user: user._id}, (err, data) => {classes = data})
                 await Weapons.find({user: user._id}, (err, data) => {weapons = data})
                 await Games.find({owner: user._id}, (err, data) => {games = data})
-                return res.json({user: user, weapons: weapons, classes, classes, games: games})
+                return res.json({user: user, weapons: weapons, classes: classes, games: games})
             } else {
                 return res.json({data: "WRONG PW"})
             }
