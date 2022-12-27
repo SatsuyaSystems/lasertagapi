@@ -9,6 +9,15 @@ const Weapons = require('../models/Weapon')
 const Games = require('../models/Game')
 const fs = require("fs");
 
+//allows cross origin requests from anybody ([*]) the app needs this 
+router.use((req, res, next) => {
+    res.append('Access-Control-Allow-Origin', ['*']);
+    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.append('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
+
 router.post("/auth", urlencodedParser, async (req, res) => {
     Users.findOne({ email: req.body.email })
         .then(user => {
@@ -30,5 +39,4 @@ router.post("/auth", urlencodedParser, async (req, res) => {
         })
     })
 })
-
 module.exports = router;
