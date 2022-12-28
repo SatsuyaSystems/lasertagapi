@@ -39,6 +39,14 @@ app.use(passport.session())
 //CONNECT FLASH
 app.use(flash())
 
+
+app.use((req, res, next) => {
+    res.append('Access-Control-Allow-Origin', ['*']);
+    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.append('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
 //ROUTES
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/loginapi'));
