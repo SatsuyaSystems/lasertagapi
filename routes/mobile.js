@@ -8,6 +8,7 @@ const Classes = require('../models/Class')
 const Weapons = require('../models/Weapon')
 const Games = require('../models/Game')
 const fs = require("fs");
+const User = require('../models/User');
 
 router.post("/auth", urlencodedParser, async (req, res) => {
     Users.findOne({ email: req.body.email })
@@ -22,6 +23,24 @@ router.post("/auth", urlencodedParser, async (req, res) => {
                 return res.json({data: "WRONG PW"})
             }
         })
+    })
+})
+
+router.post("/getweapons", urlencodedParser, async (req, res) => {
+    await Weapons.find({user: req.body.userid}, function (err, weapons) {
+        res.json({weapons: weapons})
+    })
+})
+
+router.post("/getclasses", urlencodedParser, async (req, res) => {
+    await Classes.find({user: req.body.userid}, function (err, classes) {
+        res.json({classes: classes})
+    })
+})
+
+router.post("/getgames", urlencodedParser, async (req, res) => {
+    await Games.find({user: req.body.userid}, function (err, games) {
+        res.json({games: games})
     })
 })
 module.exports = router;
