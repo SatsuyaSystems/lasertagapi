@@ -18,7 +18,13 @@ router.post("/auth", urlencodedParser, async (req, res) => {
             }
             bcrypt.compare(req.body.password, user.password, async (err, isMatch) => {
             if (isMatch) {
-                return res.json({user: user})
+                var classes = []
+                var weapons = []
+                var games = []
+                await Classes.find({user: user._id}, (err, data) => {classes = data})
+                await Weapons.find({user: user._id}, (err, data) => {weapons = data})
+                await Games.find({owner: user._id}, (err, data) => {games = data})
+                return res.json({user: user, weapons: weapons, classes: classes, games: games})
             } else {
                 return res.json({data: "WRONG PW"})
             }
