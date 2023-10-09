@@ -13,9 +13,11 @@ const fs = require("fs")
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
     user: 'satsuyaos@gmail.com',
-    pass: 'yjetmrvndqxzfeub'
+    pass: 'buvdbgxmnmevlbpt'
   }
 });
 
@@ -66,13 +68,14 @@ router.post('/register', urlencodedParser, [
                         fs.readFile("./config/emails/verify_email.html", "utf8", async (err, data) => {
                             if (err) return console.log(err)
                             const emailData = data.replace("{USERNAME}", req.body.username)
-                            const emailData2 = emailData.replace("{BTNLINK}", "http://127.0.0.1:4479/users/verify/"+user._id)
+                            const emailData2 = emailData.replace("{BTNLINK}", "https://satsuya.de/users/verify/"+user._id)
                             await transporter.sendMail({
                                 from: '"Satsuyas Battleground" <satsuyaos@gmail.com>', // sender address
                                 to: req.body.email, // list of receivers
                                 subject: "Account Verification", // Subject line
                                 html: emailData2, // html body
                             });
+                            console.log("Send Mail")
                         })
                         
                     res.redirect('/users/login')
@@ -127,5 +130,23 @@ router.post('/resetpassword', urlencodedParser, async (req, res) => {
         res.redirect("/users/login")
     })
 })
+
+router.get('/test', async(req, res) => {
+    var mailOptions = {
+        from: 'youremail@gmail.com',
+        to: 'projectgremory.api@yahoo.com',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+      };
+      
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.send(info.response)
+        }
+      });
+});
 
 module.exports = router;
