@@ -17,7 +17,7 @@
 	URL: /api/fetchuser
 	Parameter:
 		username -> string
-	group -> int
+		group -> int
 	Response: userid, class, weapon
 ### Weapon
 	Method: POST
