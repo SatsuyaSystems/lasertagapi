@@ -1,4 +1,4 @@
-console.log('Loading...')
+console.log('[INFO] Loading...')
 const port = 25567
 const express = require('express');
 const mongoose = require('mongoose');
@@ -51,8 +51,6 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/loginapi'));
 app.use('/version', require("./routes/versions"));
-app.use('/gapi', require("./routes/gameapi"));
-app.use('/exe', require("./routes/controller"));
 app.use('/mobile', require("./routes/mobile"));
 app.use('/api', require("./routes/api-endpoint"));
 app.get('/403', async(req, res) => {
@@ -73,11 +71,14 @@ app.set('view engine', 'ejs')
 //DB CONNECT
 const url = 'mongodb://zero:nepGtQeAlYfSwbw8EoqR@work.miraidyus.world:27017/satsuya?mechanism=SCRAM-SHA-256&authSource=admin'
 mongoose.set('strictQuery', false);
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }).then(console.log("Mongo loaded"))
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }).then(console.log("[INFO] Mongo loaded"))
+
+//Run WebsocketServer
+const server = require('./websocket/server')
 
 //PORT
 app.listen(port);
-console.log('API Online!')
+console.log('[INFO] API Online!')
 console.log("hello world")
 
 process.on('SIGINT', function() {
